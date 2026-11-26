@@ -1,0 +1,50 @@
+{
+  "descripcion": "Comparación del CNN-Ensemble con cada CNN en CalFree (Tabla VI). Análisis descriptivo; el modelo y los umbrales se eligieron solo con validación.",
+  "fuente_logits": "resultados/4_cnn_ensemble/probabilidades_calfree_ensemble_36.npz (mismos pesos del ensemble final)",
+  "bootstrap": {
+    "tipo": "por sujeto",
+    "remuestreos": 2000,
+    "validos": 2000,
+    "semilla": 42
+  },
+  "segmentos": 57600,
+  "sujetos": 144,
+  "resultados": [
+    {
+      "modelo": "CNN 1D residual (V2)",
+      "roc_auc": 0.6781028209914819,
+      "ic95_inf": 0.6134901971034723,
+      "ic95_sup": 0.737651732326179,
+      "dif_ensemble_menos_cnn": 0.016491848980109802,
+      "dif_ic95_inf": -0.005241506003938726,
+      "dif_ic95_sup": 0.038240195452900055,
+      "significativa": false
+    },
+    {
+      "modelo": "CNN 1D multiescala (V3)",
+      "roc_auc": 0.6988717150541044,
+      "ic95_inf": 0.6422444610877001,
+      "ic95_sup": 0.751841898105958,
+      "dif_ensemble_menos_cnn": -0.004277045082512698,
+      "dif_ic95_inf": -0.025955403994022064,
+      "dif_ic95_sup": 0.015076315371688673,
+      "significativa": false
+    },
+    {
+      "modelo": "CNN 1D multitarea",
+      "roc_auc": 0.6768185152649036,
+      "ic95_inf": 0.6175507510072159,
+      "ic95_sup": 0.7317731895310783,
+      "dif_ensemble_menos_cnn": 0.01777615470668814,
+      "dif_ic95_inf": 0.001944036015249562,
+      "dif_ic95_sup": 0.03438899594037696,
+      "significativa": true
+    },
+    {
+      "modelo": "CNN-Ensemble",
+      "roc_auc": 0.6945946699715917,
+      "ic95_inf": 0.6334724690585614,
+      "ic95_sup": 0.7506783559424965
+    }
+  ]
+}

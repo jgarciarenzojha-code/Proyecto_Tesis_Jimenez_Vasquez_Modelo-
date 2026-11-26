@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alerta Temprana ECG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/estilos.css?v=6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpolyline points='4,17 11,17 13,11 16,23 19,7 21,19 23,17 28,17' fill='none' stroke='white' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ======================================================= -->
+  <!-- MENÚ LATERAL                                             -->
+  <!-- ======================================================= -->
+  <aside class="lateral">
+    <div class="marca">
+      <div class="marca__logo">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><polyline points="4,17 11,17 13,11 16,23 19,7 21,19 23,17 28,17"/></svg>
+      </div>
+      <div>
+        <p class="marca__nombre">Alerta Temprana</p>
+        <p class="marca__sub">Análisis de señales ECG</p>
+      </div>
+    </div>
+
+    <nav class="menu" role="tablist">
+      <p class="menu__titulo">Principal</p>
+      <button class="pestana activa" data-vista="analisis" role="tab">
+        <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+        <span>Nuevo análisis</span>
+      </button>
+      <button class="pestana" data-vista="historial" role="tab">
+        <svg viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+        <span>Mis análisis</span>
+      </button>
+      <button class="pestana" data-vista="monitoreo" role="tab">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M6 10h2.5l1.5-3 2 6 1.5-3H18"/><path d="M9 20h6M12 16v4"/></svg>
+        <span>Monitoreo IoT</span>
+      </button>
+      <button class="pestana" data-vista="modelo" role="tab">
+        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+        <span>Modelo</span>
+      </button>
+
+      <a class="pestana pestana--enlace" href="/admin" data-solo-admin hidden>
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>Panel de administración</span>
+      </a>
+    </nav>
+
+    <div class="lateral__inferior">
+      <div class="estado-servidor">
+        <div class="estado-servidor__fila">
+          <span id="punto-servidor" class="punto"></span>
+          <span id="texto-servidor">Conectando…</span>
+        </div>
+        <p class="estado-servidor__modelo" id="lateral-modelo">—</p>
+        <p class="estado-servidor__version" id="lateral-version"></p>
+      </div>
+
+      <div class="tarjeta-usuario">
+        <div class="tarjeta-usuario__avatar" id="usuario-iniciales">—</div>
+        <div class="tarjeta-usuario__datos">
+          <p id="usuario-nombre">—</p>
+          <span id="usuario-rol"></span>
+        </div>
+        <div class="tarjeta-usuario__acciones">
+          <button type="button" id="boton-contrasena" title="Cambiar contraseña" aria-label="Cambiar contraseña">
+            <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          </button>
+          <button type="button" id="boton-salir" title="Cerrar sesión" aria-label="Cerrar sesión">
+            <svg viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 012 2v12a2 2 0 01-2 2h-3"/><path d="M10 17l-5-5 5-5M5 12h11"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================================================= -->
+  <!-- CONTENIDO                                                -->
+  <!-- ======================================================= -->
+  <main class="principal">
+
+    <!-- ===================== NUEVO ANÁLISIS ===================== -->
+    <section id="vista-analisis" class="vista activa">
+
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta">Panel · Nuevo análisis</p>
+          <h1>Análisis de señal ECG</h1>
+          <p class="encabezado__texto">Carga un registro ECG y el modelo CNN estimará la probabilidad de un patrón asociado a hipertensión arterial.</p>
+        </div>
+        <ol class="pasos" aria-label="Progreso">
+          <li id="paso-1" class="activo"><span>1</span>Señal</li>
+          <li id="paso-2"><span>2</span>Datos</li>
+          <li id="paso-3"><span>3</span>Resultado</li>
+        </ol>
+      </header>
+
+      <div class="rejilla">
+
+        <!-- ---------- Columna de entrada ---------- -->
+        <form id="formulario" class="columna" novalidate>
+
+          <div class="tarjeta">
+            <div class="tarjeta__titulo">
+              <div class="icono icono--azul">
+                <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+              </div>
+              <div>
+                <h2>Señal ECG</h2>
+                <p>Registro a 125 Hz, mínimo 10 segundos</p>
+              </div>
+            </div>
+
+            <div class="selector" role="radiogroup">
+              <label class="selector__opcion">
+                <input type="radio" name="origen" value="archivo" checked>
+                <span>
+                  <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+                  Subir archivo
+                </span>
+              </label>
+              <label class="selector__opcion">
+                <input type="radio" name="origen" value="ejemplo">
+                <span>
+                  <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+                  Registros de ejemplo
+                </span>
+              </label>
+              <span class="selector__fondo" aria-hidden="true"></span>
+            </div>
+
+            <div id="panel-archivo">
+              <label id="zona-carga" class="zona-carga" for="archivo">
+                <input type="file" id="archivo" accept=".csv,.txt,.mat" hidden>
+                <div class="zona-carga__icono">
+                  <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5"/><path d="M8 15h2l1-3 2 5 1-2h2"/></svg>
+                </div>
+                <strong id="zona-carga-texto">Arrastra tu archivo CSV, TXT o MAT aquí</strong>
+                <small id="zona-carga-detalle">o <u>haz clic para seleccionarlo</u> · se recomiendan 60 s o más</small>
+              </label>
+            </div>
+
+            <div id="panel-ejemplo" hidden>
+              <p class="nota nota--info">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+                Registros del conjunto de prueba independiente VitalDB CalFree, no usados en el entrenamiento.
+              </p>
+              <div id="lista-ejemplos" class="lista-ejemplos"></div>
+            </div>
+          </div>
+
+          <div class="tarjeta">
+            <div class="tarjeta__titulo">
+              <div class="icono icono--violeta">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+              </div>
+              <div>
+                <h2>Datos del registro</h2>
+                <p>Opcional · código anónimo y datos demográficos</p>
+              </div>
+            </div>
+
+            <label class="campo campo--completo">
+              <span>Código de registro</span>
+              <div class="campo__control">
+                <input type="text" id="codigo" maxlength="30" placeholder="Se genera automáticamente (REG-00001)" autocomplete="off">
+              </div>
+            </label>
+
+            <div class="campos">
+              <label class="campo">
+                <span>Edad</span>
+                <div class="campo__control">
+                  <input type="number" id="edad" min="0" max="120" step="1" inputmode="numeric" placeholder="—">
+                  <em>años</em>
+                </div>
+              </label>
+              <label class="campo">
+                <span>Sexo</span>
+                <div class="campo__control">
+                  <select id="sexo">
+                    <option value="">Seleccionar</option>
+                    <option value="F">Femenino</option>
+                    <option value="M">Masculino</option>
+                  </select>
+                </div>
+              </label>
+              <label class="campo">
+                <span>Peso</span>
+                <div class="campo__control">
+                  <input type="number" id="peso" min="2" max="350" step="0.1" inputmode="decimal" placeholder="—">
+                  <em>kg</em>
+                </div>
+              </label>
+              <label class="campo">
+                <span>Talla</span>
+                <div class="campo__control">
+                  <input type="number" id="talla" min="40" max="250" step="0.1" inputmode="decimal" placeholder="—">
+                  <em>cm</em>
+                </div>
+              </label>
+            </div>
+
+            <div class="imc">
+              <span>Índice de masa corporal</span>
+              <strong id="imc">—</strong>
+            </div>
+            <p id="nota-demograficos" class="nota"></p>
+          </div>
+
+          <p id="error" class="error" role="alert" hidden></p>
+
+          <button type="submit" id="boton-analizar" class="boton-principal">
+            <svg class="boton-principal__icono" viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+            <span class="boton-principal__texto">Analizar señal</span>
+            <span class="cargando" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <!-- ---------- Columna de resultado ---------- -->
+        <div class="columna">
+
+          <div id="sin-resultado" class="tarjeta vacio">
+            <div class="vacio__monitor">
+              <svg viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true">
+                <polyline class="vacio__linea" points="0,45 40,45 50,45 58,30 66,45 80,45 88,52 96,8 104,70 112,45 130,45 140,36 155,45 190,45 198,30 206,45 220,45 228,52 236,8 244,70 252,45 270,45 280,36 300,45"/>
+              </svg>
+            </div>
+            <h3>Esperando una señal</h3>
+            <p>Sube un archivo ECG o elige un registro de ejemplo y presiona <strong>Analizar señal</strong>.</p>
+          </div>
+
+          <div id="analizando" class="tarjeta vacio" hidden>
+            <div class="vacio__monitor vacio__monitor--activo">
+              <svg viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true">
+                <polyline class="vacio__linea vacio__linea--rapida" points="0,45 40,45 50,45 58,30 66,45 80,45 88,52 96,8 104,70 112,45 130,45 140,36 155,45 190,45 198,30 206,45 220,45 228,52 236,8 244,70 252,45 270,45 280,36 300,45"/>
+              </svg>
+            </div>
+            <h3>Analizando señal…</h3>
+            <p>Segmentando, normalizando y procesando con la red neuronal.</p>
+          </div>
+
+          <div id="resultado" hidden>
+
+            <!-- Resultado principal -->
+            <div id="tarjeta-alerta" class="tarjeta alerta">
+              <div class="alerta__cuerpo">
+                <div class="medidor">
+                  <svg viewBox="0 0 220 122" aria-hidden="true">
+                    <g id="medidor-arcos"></g>
+                    <g id="medidor-aguja" class="medidor__aguja">
+                      <line x1="110" y1="110" x2="110" y2="34"/>
+                      <circle cx="110" cy="110" r="8"/>
+                    </g>
+                  </svg>
+                  <div class="medidor__valor">
+                    <strong id="probabilidad">—</strong>
+                    <span>probabilidad</span>
+                  </div>
+                </div>
+
+                <div class="alerta__texto">
+                  <p class="alerta__rotulo">Nivel de alerta</p>
+                  <p id="nivel" class="alerta__nivel">—</p>
+                  <p id="mensaje" class="alerta__mensaje"></p>
+                  <div class="leyenda-niveles" id="leyenda-niveles"></div>
+                </div>
+              </div>
+
+              <div class="aviso">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+                <p id="aviso"></p>
+              </div>
+            </div>
+
+            <!-- Indicadores -->
+            <div class="indicadores">
+              <div class="indicador">
+                <div class="icono icono--azul"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="4" height="14" rx="1"/><rect x="10" y="5" width="4" height="14" rx="1"/><rect x="17" y="5" width="4" height="14" rx="1"/></svg></div>
+                <div><span>Segmentos</span><strong id="r-segmentos">—</strong></div>
+              </div>
+              <div class="indicador">
+                <div class="icono icono--cian"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></div>
+                <div><span>Duración</span><strong id="r-duracion">—</strong></div>
+              </div>
+              <div class="indicador">
+                <div class="icono icono--violeta"><svg viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg></div>
+                <div><span>Umbral</span><strong id="r-umbral">—</strong></div>
+              </div>
+              <div class="indicador">
+                <div class="icono icono--gris"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+                <div><span>Modelo</span><strong id="r-modelo">—</strong></div>
+              </div>
+            </div>
+
+            <div id="referencia" class="referencia" hidden></div>
+
+            <div class="acciones-resultado">
+              <button type="button" id="boton-nuevo" class="boton-secundario">
+                <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                Nuevo análisis
+              </button>
+            </div>
+
+            <!-- Monitor ECG -->
+            <div class="monitor">
+              <div class="monitor__barra">
+                <div class="monitor__etiquetas">
+                  <span class="monitor__punto"></span>
+                  <span>ECG</span>
+                  <span class="monitor__dato">125 Hz</span>
+                  <span class="monitor__dato" id="monitor-tiempo">0–10 s</span>
+                </div>
+                <div class="navegador-segmento">
+                  <button type="button" id="seg-anterior" aria-label="Segmento anterior">
+                    <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+                  </button>
+                  <span id="seg-etiqueta">Segmento 1</span>
+                  <button type="button" id="seg-siguiente" aria-label="Segmento siguiente">
+                    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </div>
+              <canvas id="grafica-ecg" class="grafica" height="230"></canvas>
+              <div class="monitor__pie">
+                <span>Señal tal como fue cargada · el modelo recibe cada segmento normalizado (z-score)</span>
+                <span id="monitor-prob" class="monitor__prob"></span>
+              </div>
+            </div>
+
+            <!-- Probabilidad por segmento -->
+            <div class="tarjeta">
+              <div class="tarjeta__titulo tarjeta__titulo--compacto">
+                <div>
+                  <h2>Probabilidad por segmento</h2>
+                  <p>El resultado final es el promedio de todos los segmentos · clic en una barra para ver su señal</p>
+                </div>
+              </div>
+              <canvas id="grafica-segmentos" class="grafica" height="210"></canvas>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MONITOREO IoT ===================== -->
+    <section id="vista-monitoreo" class="vista">
+
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta">Panel · Monitoreo IoT</p>
+          <h1>Monitoreo de dispositivo</h1>
+          <p class="encabezado__texto">Segmentos ECG de 10 s recibidos por HTTP desde un dispositivo IoT y analizados al llegar.</p>
+        </div>
+        <div class="monitoreo-control">
+          <select id="mon-dispositivo" aria-label="Dispositivo"></select>
+          <span id="mon-estado" class="estado-disp">Sin datos</span>
+        </div>
+      </header>
+
+      <p class="nota nota--info monitoreo-aviso">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        Dispositivo simulado: un cliente de software reproduce registros ECG de PulseDB y los envía como lo haría un equipo de adquisición. No se utiliza un sensor físico.
+      </p>
+
+      <div id="mon-vacio" class="tarjeta vacio">
+        <h3 id="mon-vacio-titulo">Sin dispositivos asignados</h3>
+        <p id="mon-vacio-texto">Cuando un dispositivo registrado envíe segmentos ECG, el resultado aparecerá aquí en tiempo real.</p>
+      </div>
+
+      <div id="mon-panel" hidden>
+        <div class="resumen-historial">
+          <div class="kpi"><span>Último segmento</span><strong id="mon-ultimo">—</strong></div>
+          <div class="kpi" id="mon-kpi-sesion"><span>Promedio de la sesión</span><strong id="mon-promedio">—</strong></div>
+          <div class="kpi"><span>Segmentos recibidos</span><strong id="mon-n">0</strong></div>
+          <div class="kpi"><span>Duración recibida</span><strong id="mon-duracion">0 s</strong></div>
+        </div>
+
+        <div class="monitor">
+          <div class="monitor__barra">
+            <div class="monitor__etiquetas">
+              <span class="monitor__punto"></span>
+              <span>ECG en vivo</span>
+              <span class="monitor__dato">125 Hz</span>
+              <span class="monitor__dato" id="mon-seg-etiqueta">—</span>
+            </div>
+            <span class="monitor__dato" id="mon-sesion">—</span>
+          </div>
+          <canvas id="mon-ecg" class="grafica" height="220"></canvas>
+          <div class="monitor__pie">
+            <span>Último segmento recibido del dispositivo</span>
+            <span id="mon-prob" class="monitor__prob"></span>
+          </div>
+        </div>
+
+        <div class="tarjeta">
+          <div class="tarjeta__titulo tarjeta__titulo--compacto">
+            <div>
+              <h2>Probabilidad por segmento recibido</h2>
+              <p id="mon-pie-sesion">El nivel de la sesión es el promedio de todos los segmentos recibidos.</p>
+            </div>
+          </div>
+          <canvas id="mon-barras" class="grafica" height="200"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HISTORIAL ===================== -->
+    <section id="vista-historial" class="vista">
+
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta">Panel · Mis análisis</p>
+          <h1>Mis análisis</h1>
+          <p class="encabezado__texto">Análisis realizados con tu cuenta y su nivel de alerta.</p>
+        </div>
+        <button type="button" id="refrescar-historial" class="boton-secundario">
+          <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/></svg>
+          Actualizar
+        </button>
+      </header>
+
+      <div class="resumen-historial">
+        <div class="kpi"><span>Total de análisis</span><strong id="kpi-total">0</strong></div>
+        <div class="kpi kpi--Bajo"><span>Nivel bajo</span><strong id="kpi-bajo">0</strong></div>
+        <div class="kpi kpi--Moderado"><span>Nivel moderado</span><strong id="kpi-moderado">0</strong></div>
+        <div class="kpi kpi--Alto"><span>Nivel alto</span><strong id="kpi-alto">0</strong></div>
+      </div>
+
+      <div class="tarjeta tarjeta--tabla">
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th>#</th><th>Fecha</th><th>Código</th><th>Origen</th><th>Edad</th><th>Sexo</th><th>IMC</th>
+                <th>Segm.</th><th>Probabilidad</th><th>Nivel</th><th>Modelo</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-historial"></tbody>
+          </table>
+        </div>
+        <div id="historial-vacio" class="vacio vacio--tabla" hidden>
+          <h3>Aún no hay análisis</h3>
+          <p>Los análisis que realices aparecerán aquí.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MODELO ===================== -->
+    <section id="vista-modelo" class="vista">
+
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta">Panel · Modelo</p>
+          <h1>Información del modelo</h1>
+          <p class="encabezado__texto">Configuración, umbral y métricas obtenidas en validación y prueba independiente.</p>
+        </div>
+      </header>
+
+      <div id="info-modelo" class="rejilla-modelo"></div>
+    </section>
+
+    <footer class="pie">
+      Proyecto de investigación · Escuela Profesional de Ingeniería de Sistemas · Universidad Señor de Sipán<br>
+      Herramienta de apoyo con fines académicos. No constituye un diagnóstico médico.
+    </footer>
+  </main>
+</div>
+
+<script src="/static/comun.js?v=3"></script>
+<script src="/static/app.js?v=9"></script>
+<script src="/static/monitoreo.js?v=2"></script>
+</body>
+</html>

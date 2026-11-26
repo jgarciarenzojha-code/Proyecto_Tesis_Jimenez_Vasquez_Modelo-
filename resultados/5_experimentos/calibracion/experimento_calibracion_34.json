@@ -1,0 +1,52 @@
+{
+  "protocolo": "primer segmento de cada sujeto = calibración; se evalúan los demás",
+  "sujetos": 259,
+  "segmentos_evaluados": 92981,
+  "variantes": [
+    {
+      "variante": "B: CNN V2 sola (sin referencia)",
+      "auc": 0.7224459953121063,
+      "ic_inf": 0.68393101937355,
+      "ic_sup": 0.7585689511657099,
+      "pr_auc": 0.26843763628485273
+    },
+    {
+      "variante": "R: solo presión de referencia (sin ECG)",
+      "auc": 0.7089780102939549,
+      "ic_inf": 0.6615758221823529,
+      "ic_sup": 0.7540060419387118,
+      "pr_auc": 0.22951732301595182
+    },
+    {
+      "variante": "K1: multitarea calibrada (regla 140/90)",
+      "auc": 0.7744168966878717,
+      "ic_inf": 0.7374816200182762,
+      "ic_sup": 0.8113152166659959,
+      "pr_auc": 0.35842835419578295
+    },
+    {
+      "variante": "K2: referencia + CNN V2 + multitarea calibrada",
+      "auc": 0.8082512022665931,
+      "ic_inf": 0.7737570630143547,
+      "ic_sup": 0.8401173185914619,
+      "pr_auc": 0.4048647957826909
+    }
+  ],
+  "k2_menos_r": {
+    "dif": 0.09927319197263818,
+    "ic95": [
+      0.06805489407257376,
+      0.1333817669715113
+    ]
+  },
+  "k2_menos_b": {
+    "dif": 0.08580520695448679,
+    "ic95": [
+      0.05645781120523964,
+      0.11707387236157873
+    ]
+  },
+  "mae_sbp_calibrado": 14.289921189417083,
+  "mae_dbp_calibrado": 7.698554193374425,
+  "control_auc_multitarea": 0.7263455462727505
+}

@@ -1,0 +1,8 @@
+{
+  "modelo": "multitarea",
+  "datos": "ampliado",
+  "mejor_auc_val": 0.7266451802358845,
+  "mejor_epoca": 3,
+  "train_segmentos": 429422,
+  "pos_weight": 6.356013498466862
+}

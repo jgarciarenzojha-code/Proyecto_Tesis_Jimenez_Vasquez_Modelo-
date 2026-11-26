@@ -1,0 +1,11 @@
+Sujetos de VitalDB por conjunto (todos sus segmentos en PulseDB):
+  NUEVO          sujetos  1501 | segmentos   286,671 | con HTA 140/90   32,575 (0.114)
+  calfree        sujetos   144 | segmentos   120,814 | con HTA 140/90   11,727 (0.097)
+  entrenamiento  sujetos  1034 | segmentos   832,434 | con HTA 140/90   87,166 (0.105)
+  validacion     sujetos   259 | segmentos   214,531 | con HTA 140/90   23,872 (0.111)
+
+Sujetos NUEVOS: 1501 | con al menos un segmento 140/90: 920 | con >= 20 % de segmentos 140/90: 341
+Segmentos nuevos: 286,671 | con HTA: 32,575
+
+CalBased y AAMI comparten sujetos con entrenamiento/CalFree: no se usan.
+Lista priorizada (más segmentos con HTA primero): E:\Tesis_PulseDB\resultados\sujetos_nuevos_vitaldb_42.csv

@@ -1,0 +1,100 @@
+{
+  "bootstrap": {
+    "tipo": "por sujeto",
+    "remuestreos": 1000,
+    "semilla": 42
+  },
+  "resultados": [
+    {
+      "modelo": "Ensemble actual",
+      "roc_auc": 0.7387622284525419,
+      "ic95_inf": 0.6998141530840026,
+      "ic95_sup": 0.7754203264691109,
+      "pr_auc": 0.29774077245842434
+    },
+    {
+      "modelo": "CNN v2 actual",
+      "roc_auc": 0.7226522274068028,
+      "ic95_inf": 0.6842427326776489,
+      "ic95_sup": 0.7587843355848853,
+      "pr_auc": 0.268756308948298
+    },
+    {
+      "modelo": "CNN v3 actual",
+      "roc_auc": 0.7221286685576258,
+      "ic95_inf": 0.6819941927618624,
+      "ic95_sup": 0.7633636220559081,
+      "pr_auc": 0.2833080340099325
+    },
+    {
+      "modelo": "CNN multitarea actual",
+      "roc_auc": 0.7263455529531596,
+      "ic95_inf": 0.6900257810882054,
+      "ic95_sup": 0.7610514445739932,
+      "pr_auc": 0.2633860481030068
+    },
+    {
+      "modelo": "CNN v2 ampliada",
+      "roc_auc": 0.7321956334163803,
+      "ic95_inf": 0.6953449872234237,
+      "ic95_sup": 0.7723554905313278,
+      "pr_auc": 0.25352113834330753
+    },
+    {
+      "modelo": "CNN v3 ampliada",
+      "roc_auc": 0.7176061105017606,
+      "ic95_inf": 0.6784096871519502,
+      "ic95_sup": 0.7558967937743081,
+      "pr_auc": 0.24664864136833892
+    },
+    {
+      "modelo": "CNN multitarea ampliada",
+      "roc_auc": 0.7266451802358845,
+      "ic95_inf": 0.6884800506148068,
+      "ic95_sup": 0.7634379067606367,
+      "pr_auc": 0.27271793922970083
+    },
+    {
+      "modelo": "Ensemble ampliado",
+      "roc_auc": 0.7412082122916068,
+      "ic95_inf": 0.7069932344375764,
+      "ic95_sup": 0.7761624587845081,
+      "pr_auc": 0.2765408887663841
+    }
+  ],
+  "diferencias": [
+    {
+      "comparacion": "Ensemble ampliado − Ensemble actual",
+      "dif": 0.0024459838390649136,
+      "ic95_inf": -0.013232506708651809,
+      "ic95_sup": 0.019755028763992724,
+      "prob_mejora": 0.613,
+      "significativa": false
+    },
+    {
+      "comparacion": "CNN v2 ampliada − CNN v2 actual",
+      "dif": 0.009543406009577482,
+      "ic95_inf": -0.011147749566045502,
+      "ic95_sup": 0.033120108167872246,
+      "prob_mejora": 0.8,
+      "significativa": false
+    },
+    {
+      "comparacion": "CNN v3 ampliada − CNN v3 actual",
+      "dif": -0.004522558055865211,
+      "ic95_inf": -0.02952035593881479,
+      "ic95_sup": 0.022344603538584952,
+      "prob_mejora": 0.401,
+      "significativa": false
+    },
+    {
+      "comparacion": "CNN multitarea ampliada − CNN multitarea actual",
+      "dif": 0.00029962728272492356,
+      "ic95_inf": -0.024781494922810725,
+      "ic95_sup": 0.02303768436816128,
+      "prob_mejora": 0.511,
+      "significativa": false
+    }
+  ],
+  "nota": "Solo validación (259 sujetos). CalFree no usado."
+}

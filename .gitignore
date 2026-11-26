@@ -1,0 +1,18 @@
+# Entorno de Python y cachés
+.venv/
+__pycache__/
+*.pyc
+
+# Datasets (no se suben: más de 14 GB; disponibles en PulseDB/VitalDB)
+data_train/
+data_calfree/
+data_nuevos/
+*.mat.zip
+PulseDB_Info.mat
+
+# Base de datos de la aplicación (usuarios, contraseñas cifradas y análisis)
+app_web/datos/
+*.db
+
+# Archivos temporales de Office
+~$*

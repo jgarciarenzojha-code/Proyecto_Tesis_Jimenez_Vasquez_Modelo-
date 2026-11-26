@@ -1,0 +1,34 @@
+==============================================================================
+PUNTO 39 - CNN V4 UNIFICADA (residual + multiescala + multitarea + EMA)
+==============================================================================
+Dispositivo: cuda (NVIDIA GeForce RTX 2060)
+ECG cargado y normalizado: (465480, 1250) en 80 s
+Train: 372,240 | Validation: 93,240 | pos_weight: 8.5032
+Parámetros: 1,307,427 (en inferencia: 1,307,297)
+Época  1/15 (2.8 min) | pérdida train 1.1556 | AUC val EMA 0.6925 (sin EMA 0.7064) | PR-AUC 0.2496 | lr 0.001000
+  >>> nuevo mejor modelo guardado
+Época  2/15 (2.6 min) | pérdida train 1.0166 | AUC val EMA 0.7267 (sin EMA 0.7056) | PR-AUC 0.2925 | lr 0.001000
+  >>> nuevo mejor modelo guardado
+Época  3/15 (2.4 min) | pérdida train 0.9134 | AUC val EMA 0.7137 (sin EMA 0.7143) | PR-AUC 0.2724 | lr 0.001000
+  sin mejora: 1/4
+Época  4/15 (2.4 min) | pérdida train 0.8311 | AUC val EMA 0.7129 (sin EMA 0.6983) | PR-AUC 0.2665 | lr 0.001000
+  sin mejora: 2/4
+Época  5/15 (2.3 min) | pérdida train 0.7615 | AUC val EMA 0.6871 (sin EMA 0.7093) | PR-AUC 0.2355 | lr 0.000500
+  sin mejora: 3/4
+Época  6/15 (2.2 min) | pérdida train 0.6514 | AUC val EMA 0.7092 (sin EMA 0.7001) | PR-AUC 0.2436 | lr 0.000500
+  sin mejora: 4/4
+EARLY STOPPING
+
+==============================================================================
+RESULTADO EN VALIDATION (CalFree no se usó)
+==============================================================================
+Mejor época: 2
+CNN V4 unificada  AUC = 0.7267  [IC95 0.6862 – 0.7627]  PR-AUC = 0.2925
+Ensemble (pto 35) AUC = 0.7388
+Traceback (most recent call last):
+  File "E:\Tesis_PulseDB\scripts\39_entrenar_cnn_v4_unificada.py", line 369, in <module>
+    print(f"Diferencia V4 \u2212 ensemble: {auc_v4 - auc_ens:+.4f}  [IC95 {ic_dif[0]:+.4f} – {ic_dif[1]:+.4f}]")
+  File "C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2212' in position 14: character maps to <undefined>

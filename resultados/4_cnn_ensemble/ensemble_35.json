@@ -1,0 +1,42 @@
+{
+  "modelos": {
+    "v2": "mejor_modelo_v2_regularizada_140_90.pt",
+    "v3": "mejor_modelo_v3_multiescala_140_90.pt",
+    "multitarea": "mejor_modelo_multitarea_140_90.pt"
+  },
+  "combinacion": "promedio de logits con pesos iguales; probabilidad = sigmoide(promedio)",
+  "preprocesamiento": "z-score por segmento (std < 1e-6 -> 1)",
+  "auc_val": 0.7387622296671617,
+  "mejora_sobre_v2": {
+    "dif": 0.016110002260358858,
+    "ic95": [
+      0.006174488268193221,
+      0.026161529522096046
+    ]
+  },
+  "umbral_youden": {
+    "umbral": 0.4697711131076119,
+    "sensibilidad": 0.6675779667881734,
+    "especificidad": 0.684612062760904,
+    "precision": 0.20048654401702903,
+    "exactitud": 0.6828078078078078,
+    "f1": 0.3083650990388438,
+    "tn": 57072,
+    "fp": 26292,
+    "fn": 3283,
+    "tp": 6593
+  },
+  "umbral_sensibilidad_80": {
+    "umbral": 0.30387868058836104,
+    "sensibilidad": 0.8000202511138113,
+    "especificidad": 0.5198406986229067,
+    "precision": 0.16484800433975255,
+    "exactitud": 0.5495173745173745,
+    "f1": 0.2733673557650722,
+    "tn": 43336,
+    "fp": 40028,
+    "fn": 1975,
+    "tp": 7901
+  },
+  "nota": "Umbrales congelados: elegidos solo con Validation; CalFree no usado."
+}

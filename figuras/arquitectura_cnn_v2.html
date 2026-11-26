@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Arquitectura CNN V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #1d4ed8; --azul-s: #e8efff; --naranja: #c2410c; --naranja-s: #fff1e6;
+    --violeta: #6d28d9; --violeta-s: #f1eafe; --verde: #15803d; --verde-s: #e7f6ec;
+    --rojo: #b91c1c; --rojo-s: #fdecec; --gris: #475569; --borde: #d8dfeb; --texto: #0f172a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif; color: var(--texto); }
+  #figura { width: 1800px; padding: 36px 40px 30px; background: #fff; }
+  .mono { font-family: "JetBrains Mono", Consolas, monospace; }
+
+  h1 { margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -.02em; }
+  .sub { margin: 4px 0 26px; font-size: 18px; color: var(--gris); }
+
+  .panel { border: 2px solid var(--borde); border-radius: 18px; padding: 20px 22px; position: relative; }
+  .etq { position: absolute; top: -15px; left: 20px; background: var(--texto); color: #fff; font-weight: 800;
+         font-size: 15px; padding: 3px 12px; border-radius: 8px; letter-spacing: .02em; }
+
+  /* ---------- A: flujo ---------- */
+  .flujo { display: flex; align-items: stretch; gap: 0; margin-top: 8px; }
+  .caja { flex: 1; border-radius: 12px; padding: 12px 10px; text-align: center; border: 2px solid; min-width: 0; }
+  .caja h3 { margin: 0 0 6px; font-size: 17px; font-weight: 800; }
+  .caja p { margin: 2px 0; font-size: 14.5px; }
+  .caja .forma { margin-top: 8px; padding: 4px 6px; border-radius: 7px; background: #fff; font-size: 15px; font-weight: 700; }
+  .caja .param { font-size: 12.5px; color: var(--gris); margin-top: 4px; }
+  .flecha { width: 26px; display: grid; place-items: center; color: #94a3b8; font-size: 24px; font-weight: 800; flex-shrink: 0; }
+  .c-in { border-color: #94a3b8; background: #f8fafc; }
+  .c-conv { border-color: #60a5fa; background: var(--azul-s); }
+  .c-res { border-color: #fb923c; background: var(--naranja-s); }
+  .c-pool { border-color: #a78bfa; background: var(--violeta-s); }
+  .c-den { border-color: #cbd5e1; background: #f1f5f9; }
+  .c-out { border-color: #4ade80; background: var(--verde-s); }
+
+  .llaves { display: grid; grid-template-columns: 1.05fr 5.6fr 1.05fr 3.3fr; gap: 0; margin-top: 10px; font-size: 15px; font-weight: 700; color: var(--gris); text-align: center; }
+  .llaves div { border-top: 3px solid; margin: 0 14px; padding-top: 6px; }
+
+  .tiempo { display: flex; gap: 10px; margin-top: 14px; font-size: 14px; color: var(--gris); align-items: center; flex-wrap: wrap; }
+  .tiempo b { color: var(--texto); }
+  .chip { padding: 3px 10px; border-radius: 999px; border: 1.5px solid var(--borde); background: #f8fafc; }
+
+  /* ---------- fila inferior ---------- */
+  .fila { display: grid; grid-template-columns: 1.15fr 1fr; gap: 26px; margin-top: 30px; }
+  .col { display: flex; flex-direction: column; gap: 26px; }
+
+  .nota { font-size: 14.5px; color: var(--gris); margin: 8px 0 0; line-height: 1.45; }
+  .nota b { color: var(--texto); }
+
+  .formula { margin-top: 6px; padding: 12px 14px; border-radius: 12px; background: #0f172a; color: #e2e8f0; font-size: 18px; text-align: center; }
+  .formula small { display: block; margin-top: 6px; font-size: 14px; color: #94a3b8; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin-top: 8px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--borde); text-align: center; }
+  th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--gris); }
+  td:first-child, th:first-child { text-align: left; }
+
+  .clasif { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; margin-top: 10px; }
+  .paso { border-radius: 10px; padding: 8px 8px; font-size: 13.5px; font-weight: 700; text-align: center; border: 2px solid; line-height: 1.25; }
+  .paso small { display: block; font-weight: 500; font-size: 12px; color: var(--gris); }
+  .p-d { border-color: #cbd5e1; background: #f1f5f9; }
+  .p-x { border-color: #fca5a5; background: var(--rojo-s); }
+  .p-o { border-color: #4ade80; background: var(--verde-s); }
+  .p-f { color: #94a3b8; font-weight: 800; }
+
+  .niveles { display: flex; gap: 8px; margin-top: 12px; font-size: 13.5px; font-weight: 700; }
+  .niveles span { padding: 4px 10px; border-radius: 999px; }
+
+  .ent { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; font-size: 14.5px; margin-top: 6px; }
+  .ent div { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--borde); padding: 4px 0; }
+  .ent span { color: var(--gris); }
+
+  .pie { margin-top: 18px; font-size: 13px; color: var(--gris); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div id="figura">
+
+  <h1>Diseño de la arquitectura CNN propuesta: CNN V2 residual</h1>
+  <p class="sub">Red neuronal convolucional 1D que recibe un segmento de ECG de 10 s y estima la probabilidad de un patrón asociado a presión arterial elevada (SBP ≥ 140 o DBP ≥ 90 mmHg).</p>
+
+  <!-- ===================== A ===================== -->
+  <div class="panel">
+    <span class="etq">A · Flujo completo y dimensiones (canales × longitud)</span>
+
+    <div class="flujo">
+      <div class="caja c-in">
+        <h3>Entrada</h3>
+        <p>ECG 10 s · 125 Hz</p>
+        <p>Z-score por segmento</p>
+        <div class="forma mono">1 × 1250</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-conv">
+        <h3>Conv1D inicial</h3>
+        <p>32 filtros · k = 15</p>
+        <p>s = 2 · p = 7</p>
+        <p>BatchNorm + ReLU</p>
+        <div class="forma mono">32 × 625</div>
+        <div class="param">544 parámetros</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-res">
+        <h3>Bloque residual 1</h3>
+        <p>32 canales · k = 7</p>
+        <p>s = 1</p>
+        <p>atajo: identidad</p>
+        <div class="forma mono">32 × 625</div>
+        <div class="param">14 464 parámetros</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-res">
+        <h3>Bloque residual 2</h3>
+        <p>64 canales · k = 7</p>
+        <p>s = 2</p>
+        <p>atajo: Conv 1×1</p>
+        <div class="forma mono">64 × 313</div>
+        <div class="param">45 440 parámetros</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-res">
+        <h3>Bloque residual 3</h3>
+        <p>128 canales · k = 5</p>
+        <p>s = 2</p>
+        <p>atajo: Conv 1×1</p>
+        <div class="forma mono">128 × 157</div>
+        <div class="param">131 840 parámetros</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-res">
+        <h3>Bloque residual 4</h3>
+        <p>256 canales · k = 3</p>
+        <p>s = 2</p>
+        <p>atajo: Conv 1×1</p>
+        <div class="forma mono">256 × 79</div>
+        <div class="param">329 216 parámetros</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-pool">
+        <h3>Pooling global</h3>
+        <p>AdaptiveAvgPool1d(1)</p>
+        <p>promedio en el tiempo</p>
+        <div class="forma mono">256 × 1</div>
+        <div class="param">0 parámetros</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-den">
+        <h3>Clasificador</h3>
+        <p>Dropout 0.4 → 256→64</p>
+        <p>ReLU → Dropout 0.3</p>
+        <p>64 → 1</p>
+        <div class="forma mono">1 logit</div>
+        <div class="param">16 513 parámetros</div>
+      </div>
+      <div class="flecha">→</div>
+      <div class="caja c-out">
+        <h3>Salida</h3>
+        <p>Sigmoide</p>
+        <p>probabilidad</p>
+        <p>0 a 1</p>
+        <div class="forma mono">p ∈ [0, 1]</div>
+        <div class="param">umbral 0.6052</div>
+      </div>
+    </div>
+
+    <div class="llaves">
+      <div style="border-color:#60a5fa">Entrada</div>
+      <div style="border-color:#fb923c">Extracción de características (capas convolucionales y bloques residuales)</div>
+      <div style="border-color:#a78bfa">Resumen</div>
+      <div style="border-color:#94a3b8">Clasificación</div>
+    </div>
+
+    <div class="tiempo">
+      <b>Resolución temporal de cada etapa:</b>
+      <span class="chip mono">1250 → 8 ms/muestra</span>
+      <span class="chip mono">625 → 16 ms</span>
+      <span class="chip mono">313 → 32 ms</span>
+      <span class="chip mono">157 → 64 ms</span>
+      <span class="chip mono">79 → 127 ms</span>
+      <span>· cada vez menos puntos en el tiempo, pero más canales (características): de 1 a 256.</span>
+      <span style="margin-left:auto"><b>Total: 538 017 parámetros entrenables · 12 capas Conv1D (9 principales + 3 atajos 1×1)</b></span>
+    </div>
+  </div>
+
+  <div class="fila">
+
+    <!-- ===================== B ===================== -->
+    <div class="col">
+      <div class="panel">
+        <span class="etq">B · ¿Qué hay dentro de un bloque residual?</span>
+
+        <svg viewBox="0 0 900 300" width="100%" style="margin-top:8px; font-family:'Plus Jakarta Sans',sans-serif">
+          <defs>
+            <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+            </marker>
+          </defs>
+
+          <!-- entrada -->
+          <rect x="10" y="95" width="88" height="54" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+          <text x="54" y="119" text-anchor="middle" font-size="17" font-weight="800">x</text>
+          <text x="54" y="139" text-anchor="middle" font-size="12" fill="#475569">entrada</text>
+
+          <line x1="98" y1="122" x2="128" y2="122" stroke="#64748b" stroke-width="2.5" marker-end="url(#m)"/>
+
+          <!-- camino principal -->
+          <rect x="130" y="92" width="130" height="60" rx="10" fill="#e8efff" stroke="#60a5fa" stroke-width="2"/>
+          <text x="195" y="117" text-anchor="middle" font-size="15" font-weight="800">Conv1D</text>
+          <text x="195" y="137" text-anchor="middle" font-size="12.5" fill="#475569">kernel k · stride s</text>
+          <line x1="260" y1="122" x2="282" y2="122" stroke="#64748b" stroke-width="2.5" marker-end="url(#m)"/>
+
+          <rect x="284" y="92" width="96" height="60" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="332" y="117" text-anchor="middle" font-size="14" font-weight="800">BatchNorm</text>
+          <text x="332" y="137" text-anchor="middle" font-size="14" font-weight="800">+ ReLU</text>
+          <line x1="380" y1="122" x2="402" y2="122" stroke="#64748b" stroke-width="2.5" marker-end="url(#m)"/>
+
+          <rect x="404" y="92" width="130" height="60" rx="10" fill="#e8efff" stroke="#60a5fa" stroke-width="2"/>
+          <text x="469" y="117" text-anchor="middle" font-size="15" font-weight="800">Conv1D</text>
+          <text x="469" y="137" text-anchor="middle" font-size="12.5" fill="#475569">kernel k · stride 1</text>
+          <line x1="534" y1="122" x2="556" y2="122" stroke="#64748b" stroke-width="2.5" marker-end="url(#m)"/>
+
+          <rect x="558" y="92" width="96" height="60" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="606" y="127" text-anchor="middle" font-size="14" font-weight="800">BatchNorm</text>
+          <line x1="654" y1="122" x2="694" y2="122" stroke="#64748b" stroke-width="2.5" marker-end="url(#m)"/>
+
+          <!-- suma -->
+          <circle cx="716" cy="122" r="20" fill="#fff1e6" stroke="#fb923c" stroke-width="2.5"/>
+          <text x="716" y="130" text-anchor="middle" font-size="24" font-weight="800" fill="#c2410c">+</text>
+          <line x1="736" y1="122" x2="758" y2="122" stroke="#64748b" stroke-width="2.5" marker-end="url(#m)"/>
+
+          <rect x="760" y="92" width="64" height="60" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="792" y="127" text-anchor="middle" font-size="14" font-weight="800">ReLU</text>
+          <line x1="824" y1="122" x2="846" y2="122" stroke="#64748b" stroke-width="2.5" marker-end="url(#m)"/>
+          <text x="872" y="127" text-anchor="middle" font-size="16" font-weight="800">y</text>
+
+          <!-- atajo -->
+          <path d="M 54 149 L 54 238 L 716 238 L 716 144" fill="none" stroke="#c2410c" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#m)"/>
+          <rect x="230" y="210" width="440" height="56" rx="10" fill="#fff1e6" stroke="#fb923c" stroke-width="2"/>
+          <text x="450" y="234" text-anchor="middle" font-size="14.5" font-weight="800" fill="#c2410c">Conexión de atajo (shortcut)</text>
+          <text x="450" y="253" text-anchor="middle" font-size="12.5" fill="#475569">identidad (bloque 1) o Conv 1×1 + BatchNorm (bloques 2–4)</text>
+
+          <text x="450" y="40" text-anchor="middle" font-size="16" font-weight="800" fill="#0f172a">y = ReLU( F(x) + atajo(x) )</text>
+          <text x="450" y="62" text-anchor="middle" font-size="13" fill="#475569">F(x) = lo que aprenden las dos convoluciones · el atajo conserva la información original</text>
+        </svg>
+
+        <p class="nota"><b>¿Por qué residual?</b> La suma con el atajo permite que el gradiente fluya directamente hacia las primeras capas durante el entrenamiento. Así se pueden apilar más capas sin que el aprendizaje se degrade (idea de ResNet).
+        <b>¿Por qué Conv 1×1 en el atajo?</b> Cuando el bloque cambia el número de canales (32→64, 64→128, 128→256) o reduce la longitud (stride 2), la entrada y la salida ya no tienen el mismo tamaño y no se pueden sumar; la Conv 1×1 las iguala.</p>
+      </div>
+
+      <div class="panel">
+        <span class="etq">D · Clasificador y decisión final</span>
+        <div class="clasif">
+          <div class="paso p-d">Pooling<small>256 × 1</small></div><span class="p-f">→</span>
+          <div class="paso p-d">Flatten<small>256</small></div><span class="p-f">→</span>
+          <div class="paso p-x">Dropout 0.4<small>apaga 40 %</small></div><span class="p-f">→</span>
+          <div class="paso p-d">Lineal<small>256 → 64</small></div><span class="p-f">→</span>
+          <div class="paso p-d">ReLU<small>64</small></div><span class="p-f">→</span>
+          <div class="paso p-x">Dropout 0.3<small>apaga 30 %</small></div><span class="p-f">→</span>
+          <div class="paso p-d">Lineal<small>64 → 1 (logit)</small></div><span class="p-f">→</span>
+          <div class="paso p-o">Sigmoide<small>probabilidad</small></div>
+        </div>
+        <p class="nota">Con varios segmentos (por ejemplo, 60 s = 6 segmentos) se <b>promedian las probabilidades</b> y el resultado se compara con los umbrales elegidos <b>solo con el conjunto de validación</b>:</p>
+        <div class="niveles">
+          <span style="background:var(--verde-s);color:var(--verde)">Bajo &lt; 0.4262</span>
+          <span style="background:var(--naranja-s);color:var(--naranja)">Moderado 0.4262 – 0.6052</span>
+          <span style="background:var(--rojo-s);color:var(--rojo)">Alto ≥ 0.6052 (umbral de Youden)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <!-- ===================== C ===================== -->
+      <div class="panel">
+        <span class="etq">C · ¿Cómo se calcula cada dimensión?</span>
+        <div class="formula mono">L<sub>salida</sub> = ⌊ (L<sub>entrada</sub> + 2·p − k) / s ⌋ + 1
+          <small>k = tamaño del filtro (kernel) · s = paso (stride) · p = relleno (padding = ⌊k/2⌋)</small>
+        </div>
+        <table class="mono">
+          <tr><th>Etapa</th><th>k</th><th>s</th><th>p</th><th>Cálculo</th><th>Salida</th></tr>
+          <tr><td>Conv1D inicial</td><td>15</td><td>2</td><td>7</td><td>⌊(1250+14−15)/2⌋+1</td><td><b>625</b></td></tr>
+          <tr><td>Bloque 1</td><td>7</td><td>1</td><td>3</td><td>⌊(625+6−7)/1⌋+1</td><td><b>625</b></td></tr>
+          <tr><td>Bloque 2</td><td>7</td><td>2</td><td>3</td><td>⌊(625+6−7)/2⌋+1</td><td><b>313</b></td></tr>
+          <tr><td>Bloque 3</td><td>5</td><td>2</td><td>2</td><td>⌊(313+4−5)/2⌋+1</td><td><b>157</b></td></tr>
+          <tr><td>Bloque 4</td><td>3</td><td>2</td><td>1</td><td>⌊(157+2−3)/2⌋+1</td><td><b>79</b></td></tr>
+        </table>
+        <p class="nota"><b>Filtros grandes al inicio (k = 15 ≈ 120 ms)</b> captan formas amplias del latido (complejo QRS, onda T); <b>filtros pequeños al final (k = 3)</b> combinan características ya abstractas.</p>
+      </div>
+
+      <!-- ===================== E ===================== -->
+      <div class="panel">
+        <span class="etq">E · Configuración del entrenamiento</span>
+        <div class="ent">
+          <div><span>Función de pérdida</span><b>BCEWithLogitsLoss</b></div>
+          <div><span>Peso clase positiva</span><b class="mono">pos_weight = 8.50</b></div>
+          <div><span>Optimizador</span><b>AdamW</b></div>
+          <div><span>Tasa de aprendizaje</span><b class="mono">0.001</b></div>
+          <div><span>Regularización L2</span><b class="mono">weight decay 1e-4</b></div>
+          <div><span>Tamaño de batch</span><b class="mono">128</b></div>
+          <div><span>Épocas máximas</span><b class="mono">15</b></div>
+          <div><span>Early stopping</span><b>paciencia 4 (ROC-AUC val.)</b></div>
+          <div><span>Ajuste de LR</span><b>ReduceLROnPlateau</b></div>
+          <div><span>Mejor época</span><b class="mono">3 · AUC val. 0.7227</b></div>
+        </div>
+        <p class="nota"><b>pos_weight = negativos / positivos</b> (calculado solo con Train): compensa que solo ~10 % de los segmentos sean positivos. <b>Dropout, weight decay y early stopping</b> reducen el sobreajuste.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pie">
+    <span>Fuente: elaboración propia. Implementación en PyTorch (scripts/23_entrenar_cnn_v2_140_90.py, clase CNNV2). Dimensiones verificadas ejecutando el modelo.</span>
+    <span>Datos: PulseDB – VitalDB · ECG 125 Hz · segmentos de 10 s</span>
+  </div>
+</div>
+</body>
+</html>

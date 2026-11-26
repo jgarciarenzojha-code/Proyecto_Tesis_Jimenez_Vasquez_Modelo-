@@ -1,0 +1,32 @@
+{
+  "auc_val": 0.7266948478634224,
+  "ic95": [
+    0.6861951436023572,
+    0.7627057221395855
+  ],
+  "auc_ensemble": 0.7387622284525419,
+  "diferencia_vs_ensemble": {
+    "dif": -0.012067380589119492,
+    "ic95": [
+      -0.028470138332672083,
+      0.004739437272152343
+    ]
+  },
+  "mejor_epoca": 2,
+  "umbral_youden": {
+    "umbral": 0.5751108210554504,
+    "sensibilidad": 0.6257594167679222,
+    "especificidad": 0.7099107528429538,
+    "precision": 0.20353719988143465,
+    "exactitud": 0.700997425997426
+  },
+  "umbral_sensibilidad_80": {
+    "umbral": 0.3990502844020601,
+    "sensibilidad": 0.8001215066828675,
+    "especificidad": 0.48760856004990166,
+    "precision": 0.15611355868581703,
+    "exactitud": 0.5207099957099958
+  },
+  "elegida": false,
+  "regla": "se elige solo si AUC val >= 0.7388 (ensemble del punto 35)"
+}

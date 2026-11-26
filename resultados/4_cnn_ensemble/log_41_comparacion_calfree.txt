@@ -1,0 +1,16 @@
+==============================================================================
+PUNTO 41 - ENSEMBLE FRENTE A CADA CNN EN CALFREE (TABLA VI)
+==============================================================================
+Segmentos: 57,600 | sujetos: 144 | lectura en 1 s
+
+ROC-AUC en CalFree (IC 95 %, bootstrap por sujeto, 2000 remuestreos, semilla 42)
+CNN 1D residual (V2)       0.6781 [0.6135 – 0.7377] | ensemble − red = +0.0165 [-0.0052, +0.0382] no significativa
+CNN 1D multiescala (V3)    0.6989 [0.6422 – 0.7518] | ensemble − red = -0.0043 [-0.0260, +0.0151] no significativa
+CNN 1D multitarea          0.6768 [0.6176 – 0.7318] | ensemble − red = +0.0178 [+0.0019, +0.0344] significativa
+CNN-Ensemble               0.6946 [0.6335 – 0.7507]
+
+Control: el ensemble y la CNN V2 reproducen exactamente los resultados del punto 36.
+
+Guardado: E:\Tesis_PulseDB\resultados\comparacion_ensemble_vs_cnn_calfree_41.json
+Guardado: E:\Tesis_PulseDB\resultados\comparacion_ensemble_vs_cnn_calfree_41.csv
+No se entrenó ni se modificó ningún modelo.

@@ -1,0 +1,25 @@
+==============================================================================
+PUNTO 39 - CNN V4 UNIFICADA (residual + multiescala + multitarea + EMA)
+==============================================================================
+Dispositivo: cuda (NVIDIA GeForce RTX 2060)
+ECG cargado y normalizado: (465480, 1250) en 72 s
+Train: 372,240 | Validation: 93,240 | pos_weight: 8.5032
+Parámetros: 1,307,427 (en inferencia: 1,307,297)
+
+==============================================================================
+RESULTADO EN VALIDATION (CalFree no se usó)
+==============================================================================
+Mejor época: 2
+CNN V4 unificada  AUC = 0.7267  [IC95 0.6862 - 0.7627]  PR-AUC = 0.2925
+Ensemble (pto 35) AUC = 0.7388
+Diferencia V4 - ensemble: -0.0121  [IC95 -0.0285 - +0.0047]
+Umbral Youden                0.5751 | sens 0.6258 | espec 0.7099
+Umbral Sensibilidad >= 80 %  0.3991 | sens 0.8001 | espec 0.4876
+
+DECISIÓN (regla fijada antes de entrenar):
+  La V4 NO alcanza al ensemble: se descarta y el modelo final sigue siendo el ensemble.
+
+Modelo: E:\Tesis_PulseDB\modelos\mejor_modelo_v4_unificada_140_90.pt
+Historial: E:\Tesis_PulseDB\resultados\historial_cnn_v4_unificada_140_90.csv
+Resumen: E:\Tesis_PulseDB\resultados\cnn_v4_unificada_39.json
+IMPORTANTE: solo se usó Validation; CalFree NO fue utilizado; ningún script anterior fue modificado.

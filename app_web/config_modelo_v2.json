@@ -1,0 +1,46 @@
+{
+  "nombre": "CNN V2 residual regularizada",
+  "version": "v2-140-90",
+  "estado": "Modelo provisional (será reemplazado por el modelo mejorado)",
+  "descripcion": "Red neuronal convolucional 1D con bloques residuales que clasifica segmentos de ECG de 10 s según el criterio de presión arterial elevada.",
+  "arquitectura": "cnn_v2",
+  "ruta_checkpoint": "../modelos/mejor_modelo_v2_regularizada_140_90.pt",
+
+  "entradas": ["Señal ECG (derivación única)"],
+  "usa_variables_demograficas": false,
+
+  "frecuencia_muestreo_hz": 125,
+  "muestras_por_segmento": 1250,
+  "max_segmentos": 360,
+  "preprocesamiento": "zscore_por_segmento",
+  "agregacion": "promedio de probabilidades de todos los segmentos",
+
+  "criterio_etiqueta": "SBP >= 140 mmHg o DBP >= 90 mmHg",
+
+  "umbral_decision": 0.6052,
+  "niveles": [
+    { "nivel": "Bajo",     "desde": 0.0,    "hasta": 0.4262 },
+    { "nivel": "Moderado", "desde": 0.4262, "hasta": 0.6052 },
+    { "nivel": "Alto",     "desde": 0.6052, "hasta": 1.0 }
+  ],
+  "origen_umbrales": "Umbrales seleccionados únicamente con el conjunto de validación (scripts 24 y 24b): 0.4262 = sensibilidad global >= 80 %; 0.6052 = mejor índice de Youden.",
+
+  "metricas": {
+    "validacion": {
+      "descripcion": "Validación (20 % de sujetos de VitalDB Train, separados por sujeto)",
+      "roc_auc": 0.7227,
+      "pr_auc": 0.2688
+    },
+    "prueba_calfree": {
+      "descripcion": "Prueba independiente VitalDB CalFree (umbral 0.6052, evaluación por segmento)",
+      "roc_auc": 0.6781,
+      "pr_auc": 0.2273,
+      "exactitud": 0.6819,
+      "precision": 0.1797,
+      "sensibilidad": 0.5601,
+      "especificidad": 0.6963,
+      "f1": 0.2722,
+      "prevalencia": 0.1062
+    }
+  }
+}

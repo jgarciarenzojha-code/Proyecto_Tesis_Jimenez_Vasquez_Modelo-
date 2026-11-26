@@ -1,0 +1,46 @@
+{
+  "nombre": "Ensemble de CNN (V2 + V3 + multitarea)",
+  "version": "ensemble-140-90-v1",
+  "estado": "Modelo final",
+  "descripcion": "Combinación de tres redes neuronales convolucionales 1D (residual V2, multiescala V3 y multitarea) que promedian sus predicciones para clasificar segmentos de ECG de 10 s según el criterio de hipertensión arterial (PAS ≥ 140 o PAD ≥ 90 mmHg).",
+  "arquitectura": "ensemble",
+  "ruta_checkpoint": "../modelos/mejor_modelo_ensemble_140_90.pt",
+
+  "entradas": ["Señal ECG (derivación única)"],
+  "usa_variables_demograficas": false,
+
+  "frecuencia_muestreo_hz": 125,
+  "muestras_por_segmento": 1250,
+  "max_segmentos": 2160,
+  "preprocesamiento": "zscore_por_segmento",
+  "agregacion": "promedio de probabilidades de todos los segmentos",
+
+  "criterio_etiqueta": "SBP >= 140 mmHg o DBP >= 90 mmHg",
+
+  "umbral_decision": 0.4698,
+  "niveles": [
+    { "nivel": "Bajo",     "desde": 0.0,    "hasta": 0.3039 },
+    { "nivel": "Moderado", "desde": 0.3039, "hasta": 0.4698 },
+    { "nivel": "Alto",     "desde": 0.4698, "hasta": 1.0 }
+  ],
+  "origen_umbrales": "Umbrales seleccionados únicamente con el conjunto de validación (script 35): 0.3039 = sensibilidad global >= 80 %; 0.4698 = mejor índice de Youden. Los tres niveles son niveles de alerta del sistema derivados de esos dos umbrales; no representan categorías clínicas ni una probabilidad calibrada.",
+
+  "metricas": {
+    "validacion": {
+      "descripcion": "Validación (20 % de sujetos de VitalDB Train, separados por sujeto)",
+      "roc_auc": 0.7388,
+      "pr_auc": 0.2977
+    },
+    "prueba_calfree": {
+      "descripcion": "Prueba independiente VitalDB CalFree (umbral 0.4698, evaluación por segmento, script 36)",
+      "roc_auc": 0.6946,
+      "pr_auc": 0.2406,
+      "exactitud": 0.6824,
+      "precision": 0.1845,
+      "sensibilidad": 0.5818,
+      "especificidad": 0.6943,
+      "f1": 0.2801,
+      "prevalencia": 0.1062
+    }
+  }
+}

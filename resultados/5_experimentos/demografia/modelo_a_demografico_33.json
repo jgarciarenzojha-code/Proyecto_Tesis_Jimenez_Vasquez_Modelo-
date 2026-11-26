@@ -1,0 +1,123 @@
+{
+  "principal": "edad + sexo + IMC (principal)",
+  "modelos": {
+    "edad": {
+      "variables": [
+        "edad"
+      ],
+      "medianas_train": [
+        61.0
+      ],
+      "media_train": [
+        59.304155920917005
+      ],
+      "std_train": [
+        15.011410550956281
+      ],
+      "coeficientes": [
+        0.15549740966859832
+      ],
+      "intercepto": -0.009612442200183823
+    },
+    "edad + sexo": {
+      "variables": [
+        "edad",
+        "sexo_masculino"
+      ],
+      "medianas_train": [
+        61.0,
+        1.0
+      ],
+      "media_train": [
+        59.304155920917005,
+        0.5735009671179884
+      ],
+      "std_train": [
+        15.01141055095309,
+        0.49456810232158027
+      ],
+      "coeficientes": [
+        0.1557254160302873,
+        -0.004521988278530086
+      ],
+      "intercepto": -0.009548549148724914
+    },
+    "edad + sexo + IMC (principal)": {
+      "variables": [
+        "edad",
+        "sexo_masculino",
+        "imc"
+      ],
+      "medianas_train": [
+        61.0,
+        1.0,
+        22.799999237060547
+      ],
+      "media_train": [
+        59.304155920917005,
+        0.5735009671179884,
+        22.90270954198077
+      ],
+      "std_train": [
+        15.01141055095309,
+        0.49456810232158027,
+        3.3818541057126796
+      ],
+      "coeficientes": [
+        0.1546050913960958,
+        -0.0027247773045240876,
+        0.035157357852438675
+      ],
+      "intercepto": -0.009897730998497003
+    },
+    "edad + sexo + peso + talla": {
+      "variables": [
+        "edad",
+        "sexo_masculino",
+        "peso",
+        "talla"
+      ],
+      "medianas_train": [
+        61.0,
+        1.0,
+        59.75,
+        162.6999969482422
+      ],
+      "media_train": [
+        59.304155920917005,
+        0.5735009671179884,
+        60.71846285589838,
+        162.3831040588779
+      ],
+      "std_train": [
+        15.01141055095309,
+        0.49456810232158027,
+        11.653904520523751,
+        9.94613436522299
+      ],
+      "coeficientes": [
+        0.16783148640082535,
+        -0.039979669711388624,
+        0.021651137474142487,
+        0.04348057443559386
+      ],
+      "intercepto": -0.010345638281227698
+    }
+  },
+  "comparacion": {
+    "auc_a": 0.519878074297577,
+    "auc_b": 0.7226522006851661,
+    "diferencia_b_menos_a": 0.20277412638758907,
+    "ic95_diferencia": [
+      0.13401963992788443,
+      0.2704027951086729
+    ],
+    "correlacion_a_b": 0.08777951015035704,
+    "lectura": "La demografía sola NO supera al azar (el IC 95 % incluye 0.5): su aporte esperado en un modelo híbrido es bajo."
+  },
+  "bootstrap": {
+    "remuestreos": 1000,
+    "unidad": "sujeto",
+    "seed": 42
+  }
+}

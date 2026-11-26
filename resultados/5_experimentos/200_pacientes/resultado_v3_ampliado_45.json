@@ -1,0 +1,8 @@
+{
+  "modelo": "v3",
+  "datos": "ampliado",
+  "mejor_auc_val": 0.7176061105017606,
+  "mejor_epoca": 1,
+  "train_segmentos": 429422,
+  "pos_weight": 6.356013498466862
+}

@@ -1,0 +1,19 @@
+==============================================================================
+PUNTO 46 - VALIDACIÓN: ENSEMBLE AMPLIADO FRENTE AL ACTUAL
+==============================================================================
+Ensemble actual            AUC 0.7388 [0.6998 – 0.7754]  PR-AUC 0.2977
+CNN v2 actual              AUC 0.7227 [0.6842 – 0.7588]  PR-AUC 0.2688
+CNN v3 actual              AUC 0.7221 [0.6820 – 0.7634]  PR-AUC 0.2833
+CNN multitarea actual      AUC 0.7263 [0.6900 – 0.7611]  PR-AUC 0.2634
+CNN v2 ampliada            AUC 0.7322 [0.6953 – 0.7724]  PR-AUC 0.2535
+CNN v3 ampliada            AUC 0.7176 [0.6784 – 0.7559]  PR-AUC 0.2466
+CNN multitarea ampliada    AUC 0.7266 [0.6885 – 0.7634]  PR-AUC 0.2727
+Ensemble ampliado          AUC 0.7412 [0.7070 – 0.7762]  PR-AUC 0.2765
+
+Diferencias pareadas por sujeto (nuevo − actual):
+  Ensemble ampliado − Ensemble actual: +0.0024 [-0.0132, +0.0198] | P(mejora) 0.61 | no significativa
+  CNN v2 ampliada − CNN v2 actual: +0.0095 [-0.0111, +0.0331] | P(mejora) 0.80 | no significativa
+  CNN v3 ampliada − CNN v3 actual: -0.0045 [-0.0295, +0.0223] | P(mejora) 0.40 | no significativa
+  CNN multitarea ampliada − CNN multitarea actual: +0.0003 [-0.0248, +0.0230] | P(mejora) 0.51 | no significativa
+
+CalFree NO fue utilizado. Ningún modelo fue modificado.

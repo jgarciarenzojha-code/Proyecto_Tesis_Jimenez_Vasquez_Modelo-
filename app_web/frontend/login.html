@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sesión · Alerta Temprana ECG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/estilos.css?v=6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpolyline points='4,17 11,17 13,11 16,23 19,7 21,19 23,17 28,17' fill='none' stroke='white' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body class="cuerpo-login">
+
+<div class="login">
+
+  <!-- Panel de marca -->
+  <section class="login__marca">
+    <div class="marca">
+      <div class="marca__logo">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><polyline points="4,17 11,17 13,11 16,23 19,7 21,19 23,17 28,17"/></svg>
+      </div>
+      <div>
+        <p class="marca__nombre">Alerta Temprana</p>
+        <p class="marca__sub">Análisis de señales ECG</p>
+      </div>
+    </div>
+
+    <div class="login__mensaje">
+      <h1>Alerta temprana de patrones asociados a hipertensión arterial</h1>
+      <p>Herramienta de apoyo basada en una red neuronal convolucional que analiza señales electrocardiográficas.</p>
+
+      <div class="login__monitor">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true">
+          <polyline class="vacio__linea" points="0,45 40,45 50,45 58,30 66,45 80,45 88,52 96,8 104,70 112,45 130,45 140,36 155,45 190,45 198,30 206,45 220,45 228,52 236,8 244,70 252,45 270,45 280,36 300,45"/>
+        </svg>
+      </div>
+
+      <ul class="login__puntos">
+        <li><span>✓</span>Acceso por roles: administrador y especialista</li>
+        <li><span>✓</span>Contraseñas cifradas y sesiones con expiración</li>
+        <li><span>✓</span>Registro de auditoría de cada acción</li>
+      </ul>
+    </div>
+
+    <p class="login__pie">Proyecto de investigación · Ingeniería de Sistemas · Universidad Señor de Sipán</p>
+  </section>
+
+  <!-- Formulario -->
+  <section class="login__formulario">
+    <form id="form-login" class="tarjeta login__tarjeta" novalidate>
+      <div class="login__encabezado">
+        <h2>Iniciar sesión</h2>
+        <p>Ingresa con la cuenta asignada por el administrador.</p>
+      </div>
+
+      <label class="campo">
+        <span>Usuario</span>
+        <div class="campo__control campo__control--icono">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <input type="text" id="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus>
+        </div>
+      </label>
+
+      <label class="campo">
+        <span>Contraseña</span>
+        <div class="campo__control campo__control--icono">
+          <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          <input type="password" id="contrasena" autocomplete="current-password" required>
+          <button type="button" id="ver-contrasena" class="ver-clave" aria-label="Mostrar contraseña">
+            <svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </label>
+
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <button type="submit" id="boton-ingresar" class="boton-principal">
+        <span class="boton-principal__texto">Ingresar</span>
+        <span class="cargando" aria-hidden="true"></span>
+      </button>
+
+      <p class="nota login__ayuda">¿No tienes cuenta o olvidaste tu contraseña? Solicítala al administrador del sistema.</p>
+    </form>
+
+    <p class="login__aviso">Herramienta de apoyo con fines académicos. No constituye un diagnóstico médico.</p>
+  </section>
+</div>
+
+<script>
+  "use strict";
+
+  const form = document.getElementById("form-login");
+  const error = document.getElementById("error");
+  const boton = document.getElementById("boton-ingresar");
+  const clave = document.getElementById("contrasena");
+
+  document.getElementById("ver-contrasena").addEventListener("click", () => {
+    clave.type = clave.type === "password" ? "text" : "password";
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    error.hidden = true;
+
+    const usuario = document.getElementById("usuario").value.trim();
+    if (!usuario || !clave.value) {
+      error.textContent = "Ingresa tu usuario y contraseña.";
+      error.hidden = false;
+      return;
+    }
+
+    boton.disabled = true;
+    boton.classList.add("ocupado");
+
+    try {
+      const r = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Solicitud": "app-ecg" },
+        credentials: "same-origin",
+        body: JSON.stringify({ usuario, contrasena: clave.value }),
+      });
+      const datos = await r.json();
+      if (!r.ok) throw new Error(datos.detail || "No se pudo iniciar sesión.");
+      window.location.href = datos.destino;
+    } catch (err) {
+      error.textContent = err.message;
+      error.hidden = false;
+      clave.value = "";
+      clave.focus();
+    } finally {
+      boton.disabled = false;
+      boton.classList.remove("ocupado");
+    }
+  });
+</script>
+</body>
+</html>

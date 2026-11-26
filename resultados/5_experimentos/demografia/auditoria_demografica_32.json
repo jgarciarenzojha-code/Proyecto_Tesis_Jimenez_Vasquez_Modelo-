@@ -1,0 +1,109 @@
+{
+  "segmentos_totales": 465480,
+  "imc_diferencia_mediana": 0.024912378201296548,
+  "imc_diferencia_p99": 0.04965990914300633,
+  "menores18_segmentos_train": 3960,
+  "menores18_sujetos_train": 11,
+  "menores18_segmentos_val": 360,
+  "menores18_sujetos_val": 1,
+  "constancia": {
+    "edad": 11,
+    "sexo_masculino": 0,
+    "peso": 18,
+    "talla": 15,
+    "imc": 17
+  },
+  "sujetos_train": 1034,
+  "sujetos_val": 259,
+  "sujetos_compartidos": 0,
+  "ks": {
+    "edad": {
+      "ks": 0.08761566208374719,
+      "p": 0.07747176745681623,
+      "media_train": 59.30406189555126,
+      "media_val": 57.69498069498069
+    },
+    "sexo_masculino": {
+      "train_pct": 57.350096711798834,
+      "val_pct": 59.07335907335908
+    },
+    "peso": {
+      "ks": 0.05176134963369006,
+      "p": 0.6126125318432021,
+      "media_train": 60.7195744680851,
+      "media_val": 61.24440154440154
+    },
+    "talla": {
+      "ks": 0.047414919755345286,
+      "p": 0.7189970544649884,
+      "media_train": 162.38365570599615,
+      "media_val": 162.9810810810811
+    },
+    "imc": {
+      "ks": 0.059625251114612816,
+      "p": 0.43208404849734156,
+      "media_train": 22.903288201160542,
+      "media_val": 22.982625482625483
+    }
+  },
+  "auc_univariado": {
+    "edad": {
+      "train": 0.5453310680666218,
+      "val": 0.5144149541061235,
+      "capacidad_val": 0.5144149541061235
+    },
+    "sexo_masculino": {
+      "train": 0.5008126961530143,
+      "val": 0.49823979720784745,
+      "capacidad_val": 0.5017602027921526
+    },
+    "peso": {
+      "train": 0.4943186020070484,
+      "val": 0.5095062264960127,
+      "capacidad_val": 0.5095062264960127
+    },
+    "talla": {
+      "train": 0.4863593292313386,
+      "val": 0.511711296561213,
+      "capacidad_val": 0.511711296561213
+    },
+    "imc": {
+      "train": 0.5055688290916023,
+      "val": 0.4979747355767731,
+      "capacidad_val": 0.5020252644232269
+    }
+  },
+  "positivos_por_edad_train": {
+    "<18": {
+      "segmentos": 3960,
+      "pct_positivos": 0.6818181818181818
+    },
+    "18-29": {
+      "segmentos": 13680,
+      "pct_positivos": 13.603801169590643
+    },
+    "30-44": {
+      "segmentos": 40320,
+      "pct_positivos": 8.244047619047619
+    },
+    "45-59": {
+      "segmentos": 106560,
+      "pct_positivos": 8.682432432432433
+    },
+    "60-74": {
+      "segmentos": 154440,
+      "pct_positivos": 11.395363895363895
+    },
+    "75+": {
+      "segmentos": 53280,
+      "pct_positivos": 13.338963963963964
+    }
+  },
+  "continuidad": {
+    "pares": 3000,
+    "salto_borde_mediana": 14.72087143782844,
+    "salto_interno_p95_mediana": 20.73701163111106,
+    "pct_bordes_continuos": 60.66666666666667,
+    "conclusion": "Los segmentos consecutivos NO parecen continuos: la agregación debe describirse como 'varios segmentos del mismo sujeto', no como un registro continuo de 60 s."
+  }
+}

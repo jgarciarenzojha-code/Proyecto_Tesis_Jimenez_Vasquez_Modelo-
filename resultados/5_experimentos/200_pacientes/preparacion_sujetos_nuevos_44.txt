@@ -1,0 +1,9 @@
+Sujetos nuevos: 200 | segmentos tomados: 57,182 (tope 360 por sujeto, semilla 42) | lectura en 58 s
+Segmentos nuevos con HTA 140/90: 19,207 (0.336)
+Sujetos con el tope de 360: 71
+
+Entrenamiento original: 1034 sujetos | 372,240 segmentos | positivos 39,170 (0.105)
+Entrenamiento ampliado: 1234 sujetos | 429,422 segmentos | positivos 58,377 (0.136)
+
+Validación (259 sujetos) y CalFree (144) no cambian.
+Guardado: E:\Tesis_PulseDB\procesado\sujetos_nuevos_44.npz

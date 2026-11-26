@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración · Alerta Temprana ECG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/estilos.css?v=6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237c3aed'/%3E%3Cpolyline points='4,17 11,17 13,11 16,23 19,7 21,19 23,17 28,17' fill='none' stroke='white' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ======================================================= -->
+  <!-- MENÚ LATERAL                                             -->
+  <!-- ======================================================= -->
+  <aside class="lateral lateral--admin">
+    <div class="marca">
+      <div class="marca__logo marca__logo--admin">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><polyline points="4,17 11,17 13,11 16,23 19,7 21,19 23,17 28,17"/></svg>
+      </div>
+      <div>
+        <p class="marca__nombre">Alerta Temprana</p>
+        <p class="marca__sub">Panel de administración</p>
+      </div>
+    </div>
+
+    <nav class="menu" role="tablist">
+      <p class="menu__titulo">Administración</p>
+      <button class="pestana activa" data-vista="resumen" role="tab">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>Resumen</span>
+      </button>
+      <button class="pestana" data-vista="analisis" role="tab">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <span>Análisis</span>
+      </button>
+      <button class="pestana" data-vista="usuarios" role="tab">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.8c2 .7 3.5 2.4 3.5 5.2"/></svg>
+        <span>Usuarios</span>
+      </button>
+      <button class="pestana" data-vista="modelo" role="tab">
+        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+        <span>Modelo</span>
+      </button>
+      <button class="pestana" data-vista="auditoria" role="tab">
+        <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+        <span>Auditoría</span>
+      </button>
+
+      <p class="menu__titulo menu__titulo--espacio">Herramienta</p>
+      <a class="pestana pestana--enlace" href="/app">
+        <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+        <span>Ir a análisis de ECG</span>
+      </a>
+    </nav>
+
+    <div class="lateral__inferior">
+      <div class="tarjeta-usuario">
+        <div class="tarjeta-usuario__avatar tarjeta-usuario__avatar--admin" id="usuario-iniciales">—</div>
+        <div class="tarjeta-usuario__datos">
+          <p id="usuario-nombre">—</p>
+          <span id="usuario-rol"></span>
+        </div>
+        <div class="tarjeta-usuario__acciones">
+          <button type="button" id="boton-contrasena" title="Cambiar contraseña" aria-label="Cambiar contraseña">
+            <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          </button>
+          <button type="button" id="boton-salir" title="Cerrar sesión" aria-label="Cerrar sesión">
+            <svg viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 012 2v12a2 2 0 01-2 2h-3"/><path d="M10 17l-5-5 5-5M5 12h11"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================================================= -->
+  <!-- CONTENIDO                                                -->
+  <!-- ======================================================= -->
+  <main class="principal">
+
+    <!-- ===================== RESUMEN ===================== -->
+    <section id="vista-resumen" class="vista activa">
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta encabezado__ruta--admin">Administración · Resumen</p>
+          <h1>Resumen general</h1>
+          <p class="encabezado__texto">Actividad del sistema y distribución de los resultados de todos los especialistas.</p>
+        </div>
+        <button type="button" class="boton-secundario" id="refrescar-resumen">
+          <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/></svg>
+          Actualizar
+        </button>
+      </header>
+
+      <div class="resumen-historial">
+        <div class="kpi kpi--icono">
+          <div class="icono icono--azul"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></div>
+          <div><span>Total de análisis</span><strong id="k-total">—</strong></div>
+        </div>
+        <div class="kpi kpi--icono">
+          <div class="icono icono--violeta"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/></svg></div>
+          <div><span>Especialistas activos</span><strong id="k-especialistas">—</strong></div>
+        </div>
+        <div class="kpi kpi--icono kpi--Alto">
+          <div class="icono icono--rojo"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></div>
+          <div><span>Nivel alto</span><strong id="k-alto">—</strong></div>
+        </div>
+        <div class="kpi kpi--icono">
+          <div class="icono icono--cian"><svg viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+          <div><span>Probabilidad media</span><strong id="k-prob">—</strong></div>
+        </div>
+      </div>
+
+      <div class="rejilla-admin">
+        <div class="tarjeta">
+          <div class="tarjeta__titulo tarjeta__titulo--compacto">
+            <div><h2>Análisis por día</h2><p>Últimos 30 días</p></div>
+          </div>
+          <canvas id="grafica-dias" class="grafica" height="240"></canvas>
+        </div>
+
+        <div class="tarjeta">
+          <div class="tarjeta__titulo tarjeta__titulo--compacto">
+            <div><h2>Distribución por nivel</h2><p>Todos los análisis</p></div>
+          </div>
+          <div class="dona">
+            <svg id="dona" viewBox="0 0 120 120" aria-hidden="true"></svg>
+            <div class="dona__leyenda" id="dona-leyenda"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tarjeta tarjeta--tabla" style="margin-top:18px">
+        <div class="tarjeta__titulo tarjeta__titulo--compacto tarjeta__titulo--relleno">
+          <div><h2>Actividad por especialista</h2><p>Cantidad de análisis y su distribución por nivel</p></div>
+        </div>
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Especialista</th><th>Total</th><th>Bajo</th><th>Moderado</th><th>Alto</th><th>Último análisis</th></tr></thead>
+            <tbody id="tabla-especialistas"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ANÁLISIS ===================== -->
+    <section id="vista-analisis" class="vista">
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta encabezado__ruta--admin">Administración · Análisis</p>
+          <h1>Todos los análisis</h1>
+          <p class="encabezado__texto">Consulta, filtra y exporta los análisis realizados por todos los especialistas.</p>
+        </div>
+      </header>
+
+      <form id="filtros" class="tarjeta filtros">
+        <label class="campo"><span>Especialista</span>
+          <div class="campo__control"><select id="f-usuario"><option value="">Todos</option></select></div>
+        </label>
+        <label class="campo"><span>Nivel</span>
+          <div class="campo__control">
+            <select id="f-nivel">
+              <option value="">Todos</option><option>Bajo</option><option>Moderado</option><option>Alto</option>
+            </select>
+          </div>
+        </label>
+        <label class="campo"><span>Desde</span>
+          <div class="campo__control"><input type="date" id="f-desde"></div>
+        </label>
+        <label class="campo"><span>Hasta</span>
+          <div class="campo__control"><input type="date" id="f-hasta"></div>
+        </label>
+        <div class="filtros__acciones">
+          <button type="submit" class="boton-compacto">Filtrar</button>
+          <button type="button" class="boton-secundario" id="exportar-csv">
+            <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+            Exportar CSV
+          </button>
+        </div>
+      </form>
+
+      <div class="tarjeta tarjeta--tabla" style="margin-top:18px">
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th>#</th><th>Fecha</th><th>Código</th><th>Especialista</th><th>Origen</th><th>Edad</th><th>Sexo</th>
+                <th>Probabilidad</th><th>Nivel</th><th>Modelo</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="tabla-analisis"></tbody>
+          </table>
+        </div>
+        <div id="analisis-vacio" class="vacio vacio--tabla" hidden>
+          <h3>Sin resultados</h3>
+          <p>No hay análisis que coincidan con los filtros.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== USUARIOS ===================== -->
+    <section id="vista-usuarios" class="vista">
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta encabezado__ruta--admin">Administración · Usuarios</p>
+          <h1>Usuarios</h1>
+          <p class="encabezado__texto">Crea cuentas para los especialistas, restablece contraseñas y desactiva accesos.</p>
+        </div>
+        <button type="button" class="boton-compacto" id="nuevo-usuario">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Nuevo usuario
+        </button>
+      </header>
+
+      <div class="tarjeta tarjeta--tabla">
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead>
+              <tr><th>Nombre</th><th>Usuario</th><th>Rol</th><th>Estado</th><th>Análisis</th><th>Último acceso</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tabla-usuarios"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MODELO ===================== -->
+    <section id="vista-modelo" class="vista">
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta encabezado__ruta--admin">Administración · Modelo</p>
+          <h1>Modelo activo</h1>
+          <p class="encabezado__texto">Configuración, umbral y métricas del modelo que usa la aplicación. Se cambia editando config_modelo.json.</p>
+        </div>
+      </header>
+      <div id="info-modelo" class="rejilla-modelo"></div>
+    </section>
+
+    <!-- ===================== AUDITORÍA ===================== -->
+    <section id="vista-auditoria" class="vista">
+      <header class="encabezado">
+        <div>
+          <p class="encabezado__ruta encabezado__ruta--admin">Administración · Auditoría</p>
+          <h1>Registro de auditoría</h1>
+          <p class="encabezado__texto">Trazabilidad de inicios de sesión, análisis y cambios en los usuarios (últimos 300 eventos).</p>
+        </div>
+        <button type="button" class="boton-secundario" id="refrescar-auditoria">
+          <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/></svg>
+          Actualizar
+        </button>
+      </header>
+      <div class="tarjeta tarjeta--tabla">
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Fecha</th><th>Usuario</th><th>Evento</th><th>Detalle</th></tr></thead>
+            <tbody id="tabla-auditoria"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pie">
+      Proyecto de investigación · Escuela Profesional de Ingeniería de Sistemas · Universidad Señor de Sipán<br>
+      Herramienta de apoyo con fines académicos. No constituye un diagnóstico médico.
+    </footer>
+  </main>
+</div>
+
+<!-- Diálogo: nuevo usuario -->
+<dialog id="dialogo-usuario" class="dialogo">
+  <form id="form-usuario" class="dialogo__cuerpo" novalidate>
+    <h2>Nuevo usuario</h2>
+    <p class="nota">El usuario recibirá una contraseña inicial que podrá cambiar al ingresar.</p>
+    <label class="campo"><span>Nombre completo</span>
+      <div class="campo__control"><input type="text" id="u-nombre" maxlength="80" placeholder="Ej.: Dra. Ana Torres" required></div>
+    </label>
+    <label class="campo"><span>Usuario (para iniciar sesión)</span>
+      <div class="campo__control"><input type="text" id="u-usuario" maxlength="30" placeholder="Ej.: atorres" autocapitalize="none" spellcheck="false" required></div>
+    </label>
+    <label class="campo"><span>Rol</span>
+      <div class="campo__control">
+        <select id="u-rol">
+          <option value="especialista">Especialista</option>
+          <option value="administrador">Administrador</option>
+        </select>
+      </div>
+    </label>
+    <label class="campo"><span>Contraseña inicial</span>
+      <div class="campo__control"><input type="text" id="u-contrasena" placeholder="Vacío = generar automáticamente" autocomplete="off"></div>
+    </label>
+    <p class="error" id="error-usuario" hidden></p>
+    <div class="dialogo__acciones">
+      <button type="button" class="boton-secundario" id="cancelar-usuario">Cancelar</button>
+      <button type="submit" class="boton-compacto">Crear usuario</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Diálogo: credenciales (se muestran una sola vez) -->
+<dialog id="dialogo-credenciales" class="dialogo">
+  <div class="dialogo__cuerpo">
+    <h2 id="cred-titulo">Credenciales</h2>
+    <p class="nota">Entrega estos datos al usuario. <b>La contraseña no se volverá a mostrar.</b></p>
+    <div class="credenciales">
+      <div><span>Usuario</span><strong class="mono" id="cred-usuario"></strong></div>
+      <div><span>Contraseña</span><strong class="mono" id="cred-contrasena"></strong></div>
+      <div><span>Enlace de acceso</span><strong class="mono" id="cred-enlace"></strong></div>
+    </div>
+    <div class="dialogo__acciones">
+      <button type="button" class="boton-secundario" id="copiar-credenciales">Copiar</button>
+      <button type="button" class="boton-compacto" id="cerrar-credenciales">Listo</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="/static/comun.js?v=3"></script>
+<script src="/static/admin.js?v=3"></script>
+</body>
+</html>

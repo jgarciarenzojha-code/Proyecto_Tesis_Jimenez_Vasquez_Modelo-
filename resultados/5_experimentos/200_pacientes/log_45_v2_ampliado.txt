@@ -1,0 +1,16 @@
+==============================================================================
+PUNTO 45 - CNN V2 | datos: ampliado | cuda
+==============================================================================
+Datos en memoria en 101 s | train 429,422 (positivos 0.136) | validación 93,240
+pos_weight (solo train): 6.3560
+Parámetros: 538,017
+Época  1/15 (1.6 min) | pérdida 1.0219 | AUC val 0.7322 | PR-AUC 0.2535 | lr 0.001000  <- mejor
+Época  2/15 (1.6 min) | pérdida 0.9034 | AUC val 0.6960 | PR-AUC 0.2523 | lr 0.001000
+Época  3/15 (1.7 min) | pérdida 0.7932 | AUC val 0.7288 | PR-AUC 0.2661 | lr 0.001000
+Época  4/15 (1.6 min) | pérdida 0.7072 | AUC val 0.7002 | PR-AUC 0.2358 | lr 0.000500
+Época  5/15 (1.5 min) | pérdida 0.5948 | AUC val 0.7130 | PR-AUC 0.2493 | lr 0.000500
+Early stopping.
+
+Mejor AUC en validación: 0.7322 (modelo actual de la app: ~0.7227)
+Guardado: E:\Tesis_PulseDB\modelos\mejor_modelo_v2_ampliado_45.pt
+CalFree NO fue utilizado. Los modelos actuales no se modificaron.

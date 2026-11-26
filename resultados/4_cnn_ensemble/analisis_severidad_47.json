@@ -1,0 +1,261 @@
+{
+  "descripcion": "Análisis complementario por severidad (grado por segmento, ESC 2024). Modelo final CNN-Ensemble; probabilidades de los puntos 35 y 36; umbrales fijados en validación.",
+  "bootstrap": {
+    "tipo": "por sujeto",
+    "validacion": 1000,
+    "calfree": 2000,
+    "semilla": 42
+  },
+  "resultados": [
+    {
+      "conjunto": "Validación",
+      "metrica": "composicion",
+      "grupo": "No elevada",
+      "segmentos": 83364,
+      "sujetos": 259,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "composicion",
+      "grupo": "HTA grado 1",
+      "segmentos": 8331,
+      "sujetos": 211,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "composicion",
+      "grupo": "HTA grado >= 2",
+      "segmentos": 1545,
+      "sujetos": 112,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "auc",
+      "grupo": "Grado 1 vs no elevada",
+      "valor": 0.7213529101521104,
+      "ic95_inf": 0.6802457199748302,
+      "ic95_sup": 0.7613528937650192,
+      "remuestreos_validos": 1000,
+      "sujetos_positivos": 211,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "auc",
+      "grupo": "Grado >= 2 vs no elevada",
+      "valor": 0.8326373292686545,
+      "ic95_inf": 0.797876511491236,
+      "ic95_sup": 0.8672430584526525,
+      "remuestreos_validos": 1000,
+      "sujetos_positivos": 112,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "auc",
+      "grupo": "Grado >= 2 vs resto (def. del 0,814)",
+      "valor": 0.8141947546310045,
+      "ic95_inf": 0.7804294370013843,
+      "ic95_sup": 0.8496430807754627,
+      "remuestreos_validos": 1000,
+      "sujetos_positivos": 112,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "auc",
+      "grupo": "HTA total vs no elevada (principal)",
+      "valor": 0.7387622284525419,
+      "ic95_inf": 0.6998141530840026,
+      "ic95_sup": 0.7754203264691109,
+      "remuestreos_validos": 1000,
+      "sujetos_positivos": 212,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "diferencia_auc",
+      "grupo": "Grado >= 2 − grado 1 (vs no elevada)",
+      "valor": 0.11128441911654408,
+      "ic95_inf": 0.07657356318143668,
+      "ic95_sup": 0.15006483665234205,
+      "significativa": true
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "especificidad | Youden 0,4698",
+      "grupo": "No elevada",
+      "valor": 0.6846480495177775,
+      "ic95_inf": 0.6486484584439894,
+      "ic95_sup": 0.7171553024366834
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "sensibilidad | Youden 0,4698",
+      "grupo": "HTA grado 1",
+      "valor": 0.6403793062057376,
+      "ic95_inf": 0.5702416635664606,
+      "ic95_sup": 0.7060835211004255
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "sensibilidad | Youden 0,4698",
+      "grupo": "HTA grado >= 2",
+      "valor": 0.8122977346278317,
+      "ic95_inf": 0.7543633446668786,
+      "ic95_sup": 0.8654464327729114
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "especificidad | Sens. 80 % 0,3039",
+      "grupo": "No elevada",
+      "valor": 0.5198646897941558,
+      "ic95_inf": 0.4794192916262442,
+      "ic95_sup": 0.5600756795492253
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "sensibilidad | Sens. 80 % 0,3039",
+      "grupo": "HTA grado 1",
+      "valor": 0.7784179570279678,
+      "ic95_inf": 0.7193055204249291,
+      "ic95_sup": 0.8369724349661539
+    },
+    {
+      "conjunto": "Validación",
+      "metrica": "sensibilidad | Sens. 80 % 0,3039",
+      "grupo": "HTA grado >= 2",
+      "valor": 0.9158576051779935,
+      "ic95_inf": 0.868865153452811,
+      "ic95_sup": 0.9542953519392571
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "composicion",
+      "grupo": "No elevada",
+      "segmentos": 51483,
+      "sujetos": 144,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "composicion",
+      "grupo": "HTA grado 1",
+      "segmentos": 5162,
+      "sujetos": 116,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "composicion",
+      "grupo": "HTA grado >= 2",
+      "segmentos": 955,
+      "sujetos": 67,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "auc",
+      "grupo": "Grado 1 vs no elevada",
+      "valor": 0.6843446112066589,
+      "ic95_inf": 0.6189753794082715,
+      "ic95_sup": 0.7406371013108439,
+      "remuestreos_validos": 2000,
+      "sujetos_positivos": 116,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "auc",
+      "grupo": "Grado >= 2 vs no elevada",
+      "valor": 0.7499986525313647,
+      "ic95_inf": 0.6850798577825544,
+      "ic95_sup": 0.8176171134851645,
+      "remuestreos_validos": 2000,
+      "sujetos_positivos": 67,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "auc",
+      "grupo": "Grado >= 2 vs resto (def. del 0,814)",
+      "valor": 0.7343399485821265,
+      "ic95_inf": 0.6711086603816372,
+      "ic95_sup": 0.8011242774434452,
+      "remuestreos_validos": 2000,
+      "sujetos_positivos": 67,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "auc",
+      "grupo": "HTA total vs no elevada (principal)",
+      "valor": 0.6945946699715917,
+      "ic95_inf": 0.6334724690585614,
+      "ic95_sup": 0.7506783559424965,
+      "remuestreos_validos": 2000,
+      "sujetos_positivos": 117,
+      "poco_fiable": false
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "diferencia_auc",
+      "grupo": "Grado >= 2 − grado 1 (vs no elevada)",
+      "valor": 0.06565404132470576,
+      "ic95_inf": 0.015748478735829775,
+      "ic95_sup": 0.12103187012781673,
+      "significativa": true
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "especificidad | Youden 0,4698",
+      "grupo": "No elevada",
+      "valor": 0.6943457063496689,
+      "ic95_inf": 0.6416067814367358,
+      "ic95_sup": 0.7441643417714161
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "sensibilidad | Youden 0,4698",
+      "grupo": "HTA grado 1",
+      "valor": 0.568190623789229,
+      "ic95_inf": 0.4666824700770029,
+      "ic95_sup": 0.6685021513505153
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "sensibilidad | Youden 0,4698",
+      "grupo": "HTA grado >= 2",
+      "valor": 0.6554973821989529,
+      "ic95_inf": 0.52564349989961,
+      "ic95_sup": 0.7856205985645728
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "especificidad | Sens. 80 % 0,3039",
+      "grupo": "No elevada",
+      "valor": 0.5365848921003049,
+      "ic95_inf": 0.4792793261201549,
+      "ic95_sup": 0.591734688236369
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "sensibilidad | Sens. 80 % 0,3039",
+      "grupo": "HTA grado 1",
+      "valor": 0.7297559085625727,
+      "ic95_inf": 0.6305650115762008,
+      "ic95_sup": 0.8210716473880333
+    },
+    {
+      "conjunto": "CalFree",
+      "metrica": "sensibilidad | Sens. 80 % 0,3039",
+      "grupo": "HTA grado >= 2",
+      "valor": 0.8094240837696335,
+      "ic95_inf": 0.7152223008730239,
+      "ic95_sup": 0.8964530531054056
+    }
+  ]
+}

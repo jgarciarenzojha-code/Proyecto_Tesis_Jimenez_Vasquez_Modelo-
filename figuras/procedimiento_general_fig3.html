@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Procedimiento general</title>
+<style>
+  :root {
+    --texto: #1f2937;
+    --suave: #4b5563;
+    --borde: #cbd5e1;
+    --flecha: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #ffffff;
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  #figura {
+    width: 1200px;
+    padding: 28px 30px 26px;
+    background: #ffffff;
+  }
+  .fila {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: stretch;
+  }
+  .etapa {
+    border: 2px solid var(--c);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+  .etapa__cabeza {
+    min-height: 92px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--c);
+    color: #fff;
+    padding: 12px 14px 11px;
+    text-align: center;
+  }
+  .etapa__oe {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    opacity: .95;
+  }
+  .etapa__titulo {
+    font-size: 21px;
+    font-weight: 700;
+    margin-top: 4px;
+    line-height: 1.2;
+  }
+  .etapa__cuerpo {
+    background: var(--f);
+    flex: 1;
+    padding: 14px 14px 16px;
+  }
+  .etapa__cuerpo ul { list-style: none; }
+  .etapa__cuerpo li {
+    font-size: 17px;
+    line-height: 1.35;
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 8px;
+    color: var(--texto);
+  }
+  .etapa__cuerpo li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 7px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+  .etapa__producto {
+    border-top: 1px dashed var(--c);
+    padding: 9px 12px 10px;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--c);
+    min-height: 46px; display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    background: #fff;
+  }
+  .flecha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .flecha svg { width: 34px; height: 34px; }
+  .conector { height: 54px; }
+  .conector svg { width: 100%; height: 54px; display: block; }
+
+  .e1 { --c: #1d4ed8; --f: #eff6ff; }
+  .e2 { --c: #0f766e; --f: #f0fdfa; }
+  .e3 { --c: #6d28d9; --f: #f5f3ff; }
+  .e4 { --c: #b45309; --f: #fffbeb; }
+  .e5 { --c: #be123c; --f: #fff1f2; }
+  .e6 { --c: #334155; --f: #f8fafc; }
+</style>
+</head>
+<body>
+<div id="figura">
+  <div class="fila">
+
+    <div class="etapa e1">
+      <div class="etapa__cabeza">
+        <div class="etapa__oe">OE1</div>
+        <div class="etapa__titulo">Selección y preparación del dataset</div>
+      </div>
+      <div class="etapa__cuerpo"><ul>
+        <li>PulseDB (subconjunto VitalDB): 1 437 sujetos</li>
+        <li>Segmentos ECG de 10 s a 125 Hz con PAS y PAD</li>
+        <li>División por sujeto: entrenamiento 80 % y validación 20 %</li>
+        <li>Prueba independiente: CalFree (144 sujetos)</li>
+      </ul></div>
+      <div class="etapa__producto">Conjuntos de datos sin sujetos compartidos</div>
+    </div>
+
+    <div class="flecha"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <div class="etapa e2">
+      <div class="etapa__cabeza">
+        <div class="etapa__oe">OE2</div>
+        <div class="etapa__titulo">Análisis de las señales ECG</div>
+      </div>
+      <div class="etapa__cuerpo"><ul>
+        <li>Verificación de calidad: valores faltantes y señales planas</li>
+        <li>Etiquetado: PAS ≥ 140 o PAD ≥ 90 mmHg</li>
+        <li>Análisis de la distribución de clases y de la presión arterial</li>
+        <li>Normalización z-score por segmento</li>
+      </ul></div>
+      <div class="etapa__producto">Señales verificadas y etiquetadas</div>
+    </div>
+
+    <div class="flecha"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <div class="etapa e3">
+      <div class="etapa__cabeza">
+        <div class="etapa__oe">OE3</div>
+        <div class="etapa__titulo">Diseño de la arquitectura CNN</div>
+      </div>
+      <div class="etapa__cuerpo"><ul>
+        <li>CNN 1D residual</li>
+        <li>CNN 1D multiescala</li>
+        <li>CNN 1D multitarea</li>
+        <li>Modelo CNN-Ensemble: promedio de las salidas de las tres redes</li>
+      </ul></div>
+      <div class="etapa__producto">Arquitectura del modelo propuesto</div>
+    </div>
+
+    </div>
+
+  <div class="conector">
+    <svg viewBox="0 0 1140 54" preserveAspectRatio="none">
+      <path d="M 1000 2 V 27 H 186 V 46" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+      <path d="M 178 40 L 186 50 L 194 40" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    </svg>
+  </div>
+
+  <div class="fila">
+
+    <div class="etapa e4">
+      <div class="etapa__cabeza">
+        <div class="etapa__oe">OE4</div>
+        <div class="etapa__titulo">Implementación del modelo</div>
+      </div>
+      <div class="etapa__cuerpo"><ul>
+        <li>Entrenamiento en Python y PyTorch con GPU</li>
+        <li>Pérdida ponderada por el desbalance de clases</li>
+        <li>Selección del mejor modelo con el conjunto de validación</li>
+        <li>Umbrales de alerta definidos en validación</li>
+      </ul></div>
+      <div class="etapa__producto">Modelo entrenado (.pt)</div>
+    </div>
+
+    <div class="flecha"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <div class="etapa e5">
+      <div class="etapa__cabeza">
+        <div class="etapa__oe">OE5</div>
+        <div class="etapa__titulo">Evaluación del rendimiento</div>
+      </div>
+      <div class="etapa__cuerpo"><ul>
+        <li>Evaluación final en el conjunto de prueba CalFree</li>
+        <li>Matriz de confusión</li>
+        <li>Exactitud, sensibilidad, especificidad, precisión y F1</li>
+        <li>Curva ROC y AUC con intervalos de confianza</li>
+      </ul></div>
+      <div class="etapa__producto">Métricas de desempeño del modelo</div>
+    </div>
+
+    <div class="flecha"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <div class="etapa e6">
+      <div class="etapa__cabeza">
+        <div class="etapa__oe">OE6</div>
+        <div class="etapa__titulo">Desarrollo de la interfaz web</div>
+      </div>
+      <div class="etapa__cuerpo"><ul>
+        <li>Carga del archivo ECG (CSV, TXT o MAT)</li>
+        <li>Análisis automático con el modelo CNN-Ensemble</li>
+        <li>Nivel de alerta: bajo, moderado o alto</li>
+        <li>Historial de análisis y acceso por usuario</li>
+      </ul></div>
+      <div class="etapa__producto">Aplicación web funcional</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

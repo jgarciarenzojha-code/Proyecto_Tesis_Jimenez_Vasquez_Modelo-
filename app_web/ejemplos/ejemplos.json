@@ -1,0 +1,116 @@
+[
+  {
+    "id": "ej01",
+    "nombre": "Registro de prueba 01",
+    "archivo": "registro_prueba_01.csv",
+    "duracion_s": 60,
+    "fuente": "VitalDB CalFree (conjunto de prueba independiente)",
+    "demograficos": {
+      "edad": 74.0,
+      "sexo": "F",
+      "peso": 50.5,
+      "talla": 146.9
+    },
+    "referencia": {
+      "sbp_promedio": 146.9,
+      "dbp_promedio": 65.4,
+      "segmentos_140_90": 6,
+      "segmentos_total": 6
+    }
+  },
+  {
+    "id": "ej02",
+    "nombre": "Registro de prueba 02",
+    "archivo": "registro_prueba_02.csv",
+    "duracion_s": 60,
+    "fuente": "VitalDB CalFree (conjunto de prueba independiente)",
+    "demograficos": {
+      "edad": 34.0,
+      "sexo": "M",
+      "peso": 87.7,
+      "talla": 188.6
+    },
+    "referencia": {
+      "sbp_promedio": 102.0,
+      "dbp_promedio": 67.1,
+      "segmentos_140_90": 0,
+      "segmentos_total": 6
+    }
+  },
+  {
+    "id": "ej03",
+    "nombre": "Registro de prueba 03",
+    "archivo": "registro_prueba_03.csv",
+    "duracion_s": 60,
+    "fuente": "VitalDB CalFree (conjunto de prueba independiente)",
+    "demograficos": {
+      "edad": 46.0,
+      "sexo": "F",
+      "peso": 64.8,
+      "talla": 160.7
+    },
+    "referencia": {
+      "sbp_promedio": 147.7,
+      "dbp_promedio": 90.1,
+      "segmentos_140_90": 6,
+      "segmentos_total": 6
+    }
+  },
+  {
+    "id": "ej04",
+    "nombre": "Registro de prueba 04",
+    "archivo": "registro_prueba_04.csv",
+    "duracion_s": 60,
+    "fuente": "VitalDB CalFree (conjunto de prueba independiente)",
+    "demograficos": {
+      "edad": 54.0,
+      "sexo": "M",
+      "peso": 69.2,
+      "talla": 168.0
+    },
+    "referencia": {
+      "sbp_promedio": 110.3,
+      "dbp_promedio": 63.3,
+      "segmentos_140_90": 0,
+      "segmentos_total": 6
+    }
+  },
+  {
+    "id": "ej05",
+    "nombre": "Registro de prueba 05",
+    "archivo": "registro_prueba_05.csv",
+    "duracion_s": 60,
+    "fuente": "VitalDB CalFree (conjunto de prueba independiente)",
+    "demograficos": {
+      "edad": 77.0,
+      "sexo": "M",
+      "peso": 44.3,
+      "talla": 158.7
+    },
+    "referencia": {
+      "sbp_promedio": 117.3,
+      "dbp_promedio": 64.2,
+      "segmentos_140_90": 0,
+      "segmentos_total": 6
+    }
+  },
+  {
+    "id": "ej06",
+    "nombre": "Registro de prueba 06",
+    "archivo": "registro_prueba_06.csv",
+    "duracion_s": 60,
+    "fuente": "VitalDB CalFree (conjunto de prueba independiente)",
+    "demograficos": {
+      "edad": 26.0,
+      "sexo": "F",
+      "peso": 43.7,
+      "talla": 155.0
+    },
+    "referencia": {
+      "sbp_promedio": 150.7,
+      "dbp_promedio": 86.5,
+      "segmentos_140_90": 6,
+      "segmentos_total": 6
+    }
+  }
+]

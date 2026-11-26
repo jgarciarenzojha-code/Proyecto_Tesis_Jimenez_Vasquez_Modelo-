@@ -1,0 +1,13 @@
+Archivos revisados: 201 | leídos bien: 201 | con error: 0
+Sujetos nuevos: 200 | de validación: 0 | de CalFree: 0 | de entrenamiento (sin contar el control): 0
+Nombre de archivo = sujeto interno: 201/201 | en la lista del punto 42: 200/200
+Segmentos y presiones iguales a PulseDB_Info: 201/201
+Segmentos nuevos: 77,644 | con HTA 140/90: 23,426 (0.302)
+Calidad: con NaN 0 | planos 0 | IncludeFlag=0 0 | todos de 1250 muestras: True
+
+Control de señal (p000789_1): 360 segmentos en el subconjunto de entrenamiento, 400 en el archivo por sujeto.
+  Emparejamiento por PAS: diferencia máxima 0.00e+00 mmHg
+  ECG_F         diferencia máxima con el subconjunto: 0.00e+00   <-- IDÉNTICA
+  ECG_Record_F  diferencia máxima con el subconjunto: 2.75e+00
+  ECG_Raw       diferencia máxima con el subconjunto: 4.26e-01
+  ECG_Record    diferencia máxima con el subconjunto: 5.14e+00
