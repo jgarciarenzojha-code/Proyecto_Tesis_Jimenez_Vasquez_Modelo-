@@ -73,7 +73,7 @@ Con el servidor en marcha, en otra terminal (PowerShell):
 
 ```
 $env:TOKEN_DISPOSITIVO = "<token mostrado al crear el dispositivo>"
-..\.venv\Scripts\python.exe herramientas\dispositivo_simulado.py --archivo ejemplos_mategistro_prueba_01.mat
+..\.venv\Scripts\python.exe herramientas\dispositivo_simulado.py --archivo ejemplos_mat\registro_prueba_01.mat
 ```
 
 El avance se ve en la pestaña **Monitoreo IoT**. Más detalles en `app_web/README.md`.
