@@ -53,6 +53,17 @@ PATRON_CODIGO = re.compile(r"^[A-Za-z0-9 _-]{1,30}$")
 predictor = Predictor(RUTA_CONFIG)
 bd = BaseDatos(RUTA_DB)
 
+# Usuario de demostración: se crea SOLO si la base de datos no tiene ningún
+# usuario (primera vez que se levanta la aplicación en otra computadora).
+# Usuario: especialista. Solo se guarda el hash scrypt de la contraseña;
+# la contraseña está indicada en el README y conviene cambiarla.
+USUARIO_DEMO = "especialista"
+HASH_CONTRASENA_DEMO = "scrypt$16384$8$1$BMuZ7WiUkjeqF1pS16hIUQ==$vfjIQimfW9meWyn3Ka+w7KFsgPSrl3puIjGzWA4JR0Y="
+
+if not bd.listar_usuarios():
+    bd.crear_usuario(USUARIO_DEMO, "Especialista de demostración", "especialista", HASH_CONTRASENA_DEMO)
+    bd.auditar("usuario_demo_creado", None, USUARIO_DEMO)
+
 app = FastAPI(
     title="Sistema de alerta temprana - ECG",
     description=(

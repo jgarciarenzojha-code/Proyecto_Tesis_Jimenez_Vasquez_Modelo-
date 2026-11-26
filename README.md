@@ -41,24 +41,39 @@ Versiones usadas: torch 2.9.0 (CUDA 12.8), numpy 2.4.6, h5py 3.16.0, scipy 1.17.
 pandas 3.0.6, matplotlib 3.11.2, FastAPI 0.142.4, Uvicorn 0.54.0.
 
 ## Aplicación web (no necesita los datasets)
-La base de datos se crea vacía al iniciar. Primero se crea un administrador:
-
 ```
 cd app_web
-..\.venv\Scripts\python.exe herramientas\gestionar_usuarios.py crear admin "Administrador" administrador
 ..\.venv\Scripts\python.exe -m uvicorn backend.main:app --port 8001
 ```
 
-Abrir http://127.0.0.1:8001. Hay registros de prueba en `app_web/ejemplos` y `app_web/ejemplos_mat`.
+Abrir http://127.0.0.1:8001 e iniciar sesión con el **usuario de demostración**, que se crea
+automáticamente la primera vez que se levanta la aplicación (cuando la base de datos está vacía):
+
+| Usuario | Contraseña | Rol |
+|---|---|---|
+| `especialista` | `especialista123` | Especialista (análisis, historial y Monitoreo IoT) |
+
+> Es una cuenta de demostración para uso local. Se recomienda cambiar la contraseña:
+> `..\.venv\Scripts\python.exe herramientas\gestionar_usuarios.py contrasena especialista`
+
+Para administrar usuarios (panel /admin) se puede crear un administrador:
+`..\.venv\Scripts\python.exe herramientas\gestionar_usuarios.py crear admin "Administrador" administrador`
+
+Hay registros de prueba en `app_web/ejemplos` y `app_web/ejemplos_mat`.
 
 ### Dispositivo IoT simulado
 No se usa un sensor físico: un programa en Python lee un registro ECG real y envía segmentos de 10 s al
-servidor por HTTP, autenticado con un token.
+servidor por HTTP, autenticado con un token. Primero se registra el dispositivo (muestra el token una sola vez):
 
 ```
-..\.venv\Scripts\python.exe herramientas\gestionar_dispositivos.py crear ECG-SIM-01 "Dispositivo ECG simulado 01" admin
-set TOKEN_DISPOSITIVO=<token mostrado al crear el dispositivo>
-..\.venv\Scripts\python.exe herramientas\dispositivo_simulado.py --archivo ejemplos_mat\registro_prueba_01.mat
+..\.venv\Scripts\python.exe herramientas\gestionar_dispositivos.py crear ECG-SIM-01 "Dispositivo ECG simulado 01" especialista
+```
+
+Con el servidor en marcha, en otra terminal (PowerShell):
+
+```
+$env:TOKEN_DISPOSITIVO = "<token mostrado al crear el dispositivo>"
+..\.venv\Scripts\python.exe herramientas\dispositivo_simulado.py --archivo ejemplos_mategistro_prueba_01.mat
 ```
 
 El avance se ve en la pestaña **Monitoreo IoT**. Más detalles en `app_web/README.md`.
